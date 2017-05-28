@@ -50,7 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Hunspell.NetCore\Hunspell.NetCore.csproj">
+    <ProjectReference Include="..\..\Hunspell.NetCore\Hunspell.NetCore.csproj">
       <Project>{4f32ff2a-9dbf-4da4-8600-d2788b94c6cb}</Project>
       <Name>Hunspell.NetCore</Name>
     </ProjectReference>
