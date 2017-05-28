@@ -71,8 +71,8 @@ namespace Hunspell.NetCore
                     rv = CheckWord(scw, ref resultType, out root);
                     if (abbv != 0 && rv == null)
                     {
-                        var u8buffer = scw + ".";
-                        rv = CheckWord(u8buffer, ref resultType, out root);
+                        var u8Buffer = scw + ".";
+                        rv = CheckWord(u8Buffer, ref resultType, out root);
                     }
                 }
                 else if (capType == CapitalizationType.All)
@@ -191,8 +191,8 @@ namespace Hunspell.NetCore
 
                 if (abbv != 0)
                 {
-                    var u8buffer = scw + ".";
-                    rv = CheckWord(u8buffer, ref resultType, out root);
+                    var u8Buffer = scw + ".";
+                    rv = CheckWord(u8Buffer, ref resultType, out root);
                     if (rv != null)
                     {
                         return rv;
@@ -229,8 +229,8 @@ namespace Hunspell.NetCore
                 if (Affix.CheckSharps && scw.Contains("SS"))
                 {
                     scw = MakeAllSmall(scw);
-                    var u8buffer = scw;
-                    rv = SpellSharps(ref u8buffer, 0, 0, 0, ref resultType, out root);
+                    var u8Buffer = scw;
+                    rv = SpellSharps(ref u8Buffer, 0, 0, 0, ref resultType, out root);
                     if (rv == null)
                     {
                         scw = MakeInitCap(scw);
@@ -239,12 +239,12 @@ namespace Hunspell.NetCore
 
                     if (abbv != 0 && rv == null)
                     {
-                        u8buffer += ".";
-                        rv = SpellSharps(ref u8buffer, 0, 0, 0, ref resultType, out root);
+                        u8Buffer += ".";
+                        rv = SpellSharps(ref u8Buffer, 0, 0, 0, ref resultType, out root);
                         if (rv == null)
                         {
-                            u8buffer = scw + ".";
-                            rv = SpellSharps(ref u8buffer, 0, 0, 0, ref resultType, out root);
+                            u8Buffer = scw + ".";
+                            rv = SpellSharps(ref u8Buffer, 0, 0, 0, ref resultType, out root);
                         }
                     }
                 }
@@ -255,8 +255,8 @@ namespace Hunspell.NetCore
             private WordEntry CheckDetailsInitCap(int abbv, CapitalizationType capType, ref string scw, ref SpellCheckResultType resultType, out string root)
             {
                 resultType |= SpellCheckResultType.OrigCap;
-                var u8buffer = MakeAllSmall(scw);
-                scw = MakeInitCap(u8buffer);
+                var u8Buffer = MakeAllSmall(scw);
+                scw = MakeInitCap(u8Buffer);
 
                 if (capType == CapitalizationType.Init)
                 {
@@ -290,21 +290,21 @@ namespace Hunspell.NetCore
                     return rv;
                 }
 
-                rv = CheckWord(u8buffer, ref resultType, out root);
+                rv = CheckWord(u8Buffer, ref resultType, out root);
 
                 if (abbv != 0 && rv == null)
                 {
-                    u8buffer += ".";
-                    rv = CheckWord(u8buffer, ref resultType, out root);
+                    u8Buffer += ".";
+                    rv = CheckWord(u8Buffer, ref resultType, out root);
                     if (rv == null)
                     {
-                        u8buffer = scw + ".";
+                        u8Buffer = scw + ".";
                         if (capType == CapitalizationType.Init)
                         {
                             resultType |= SpellCheckResultType.InitCap;
                         }
 
-                        rv = CheckWord(u8buffer, ref resultType, out root);
+                        rv = CheckWord(u8Buffer, ref resultType, out root);
 
                         if (capType == CapitalizationType.Init)
                         {
@@ -329,7 +329,7 @@ namespace Hunspell.NetCore
                         ||
                         // if CHECKSHARPS: KEEPCASE words with \xDF  are allowed
                         // in INITCAP form, too.
-                        !(Affix.CheckSharps && u8buffer.Contains('ß'))
+                        !(Affix.CheckSharps && u8Buffer.Contains('ß'))
                     )
                 )
                 {

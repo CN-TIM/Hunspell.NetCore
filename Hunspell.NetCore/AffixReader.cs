@@ -20,19 +20,19 @@ namespace Hunspell.NetCore
             Reader = reader;
         }
 
-        private const RegexOptions DefaultRegexOptions = RegexOptions.CultureInvariant;
+        private const RegexOptions _defaultRegexOptions = RegexOptions.CultureInvariant;
 
-        private static readonly Regex LineStringParseRegex = new Regex(@"^[ \t]*(\w+)[ \t]+(.+)[ \t]*$", DefaultRegexOptions);
+        private static readonly Regex _lineStringParseRegex = new Regex(@"^[ \t]*(\w+)[ \t]+(.+)[ \t]*$", _defaultRegexOptions);
 
-        private static readonly Regex SingleCommandParseRegex = new Regex(@"^[ \t]*(\w+)[ \t]*$", DefaultRegexOptions);
+        private static readonly Regex _singleCommandParseRegex = new Regex(@"^[ \t]*(\w+)[ \t]*$", _defaultRegexOptions);
 
-        private static readonly Regex CommentLineRegex = new Regex(@"^\s*(#|//)", DefaultRegexOptions | RegexOptions.ExplicitCapture);
+        private static readonly Regex _commentLineRegex = new Regex(@"^\s*(#|//)", _defaultRegexOptions | RegexOptions.ExplicitCapture);
 
-        private static readonly Regex AffixLineRegex = new Regex(
+        private static readonly Regex _affixLineRegex = new Regex(
             @"^[\t ]*([^\t ]+)[\t ]+(?:([^\t ]+)[\t ]+([^\t ]+)|([^\t ]+)[\t ]+([^\t ]+)[\t ]+([^\t ]+)(?:[\t ]+(.+))?)[\t ]*(?:[#].*)?$",
-            DefaultRegexOptions);
+            _defaultRegexOptions);
 
-        private static readonly Dictionary<string, AffixConfigOptions> FileBitFlagCommandMappings = new Dictionary<string, AffixConfigOptions>(StringComparer.OrdinalIgnoreCase)
+        private static readonly Dictionary<string, AffixConfigOptions> _fileBitFlagCommandMappings = new Dictionary<string, AffixConfigOptions>(StringComparer.OrdinalIgnoreCase)
         {
             {"COMPLEXPREFIXES", AffixConfigOptions.ComplexPrefixes},
             {"COMPOUNDMORESUFFIXES", AffixConfigOptions.CompoundMoreSuffixes},
@@ -50,7 +50,7 @@ namespace Hunspell.NetCore
             {"CHECKSHARPS", AffixConfigOptions.CheckSharps}
         };
 
-        private static readonly Dictionary<string, FlagMode> FlagModeParameterMappings = new Dictionary<string, FlagMode>(StringComparer.OrdinalIgnoreCase)
+        private static readonly Dictionary<string, FlagMode> _flagModeParameterMappings = new Dictionary<string, FlagMode>(StringComparer.OrdinalIgnoreCase)
         {
             {"LONG", FlagMode.Long},
             {"CHAR", FlagMode.Char},
@@ -60,9 +60,9 @@ namespace Hunspell.NetCore
             {"UTF-8", FlagMode.Uni}
         };
 
-        private static readonly string[] DefaultBreakTableEntries = new[] { "-", "^-", "-$" };
+        private static readonly string[] _defaultBreakTableEntries = new[] { "-", "^-", "-$" };
 
-        private static readonly CharacterSet DefaultCompoundVowels = CharacterSet.TakeArray(new[] { 'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u' });
+        private static readonly CharacterSet _defaultCompoundVowels = CharacterSet.TakeArray(new[] { 'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u' });
 
         public static readonly Encoding DefaultEncoding = Encoding.GetEncoding("ISO8859-1");
 
@@ -167,20 +167,20 @@ namespace Hunspell.NetCore
                 return true;
             }
 
-            if (CommentLineRegex.IsMatch(line))
+            if (_commentLineRegex.IsMatch(line))
             {
                 return true;
             }
 
             AffixConfigOptions option;
-            var singleCommandParsed = SingleCommandParseRegex.Match(line);
-            if (singleCommandParsed.Success && FileBitFlagCommandMappings.TryGetValue(singleCommandParsed.Groups[1].Value, out option))
+            var singleCommandParsed = _singleCommandParseRegex.Match(line);
+            if (singleCommandParsed.Success && _fileBitFlagCommandMappings.TryGetValue(singleCommandParsed.Groups[1].Value, out option))
             {
                 Builder.EnableOptions(option);
                 return true;
             }
 
-            var multiPartCommandParsed = LineStringParseRegex.Match(line);
+            var multiPartCommandParsed = _lineStringParseRegex.Match(line);
             if (
                 multiPartCommandParsed.Success
                 && TryHandleParameterizedCommand(multiPartCommandParsed.Groups[1].Value, multiPartCommandParsed.Groups[2].Value)
@@ -206,12 +206,12 @@ namespace Hunspell.NetCore
             {
                 if (Builder.BreakPoints == null)
                 {
-                    Builder.BreakPoints = new List<string>(DefaultBreakTableEntries.Length);
+                    Builder.BreakPoints = new List<string>(_defaultBreakTableEntries.Length);
                 }
 
                 if (Builder.BreakPoints.Count == 0)
                 {
-                    Builder.BreakPoints.AddRange(DefaultBreakTableEntries.Select(Builder.Dedup));
+                    Builder.BreakPoints.AddRange(_defaultBreakTableEntries.Select(Builder.Dedup));
                 }
             }
         }
@@ -409,7 +409,7 @@ namespace Hunspell.NetCore
             Builder.CompoundVowels =
                 1 < parts.Length
                 ? CharacterSet.Create(parts[1])
-                : DefaultCompoundVowels;
+                : _defaultCompoundVowels;
 
             return true;
         }
@@ -595,7 +595,7 @@ namespace Hunspell.NetCore
                 groups = new List<AffixEntryGroup.Builder<TEntry>>();
             }
 
-            var lineMatch = AffixLineRegex.Match(parameterText);
+            var lineMatch = _affixLineRegex.Match(parameterText);
             if (!lineMatch.Success)
             {
                 Builder.LogWarning("Failed to parse affix line: " + parameterText);
@@ -1105,7 +1105,7 @@ namespace Hunspell.NetCore
             }
 
             FlagMode mode;
-            if (FlagModeParameterMappings.TryGetValue(modeText, out mode))
+            if (_flagModeParameterMappings.TryGetValue(modeText, out mode))
             {
                 if (mode == Builder.FlagMode)
                 {

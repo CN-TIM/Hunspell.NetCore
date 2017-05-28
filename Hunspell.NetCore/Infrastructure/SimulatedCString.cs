@@ -6,45 +6,45 @@ namespace Hunspell.NetCore.Infrastructure
     {
         public SimulatedCString(string text)
         {
-            Buffer = StringBuilderPool.Get(text);
+            _buffer = StringBuilderPool.Get(text);
         }
 
-        private StringBuilder Buffer;
+        private StringBuilder _buffer;
 
-        private string toStringCache = null;
+        private string _toStringCache = null;
 
         public char this[int index]
         {
             get
             {
-                return index < 0 || index >= Buffer.Length ? '\0' : Buffer[index];
+                return index < 0 || index >= _buffer.Length ? '\0' : _buffer[index];
             }
             set
             {
-                toStringCache = null;
-                Buffer[index] = value;
+                _toStringCache = null;
+                _buffer[index] = value;
             }
         }
 
-        public int BufferLength => Buffer.Length;
+        public int BufferLength => _buffer.Length;
 
         public void WriteChars(string text, int destinationIndex)
         {
-            toStringCache = null;
-            Buffer.WriteChars(text, destinationIndex);
+            _toStringCache = null;
+            _buffer.WriteChars(text, destinationIndex);
         }
 
         public void WriteChars(int sourceIndex, string text, int destinationIndex)
         {
-            toStringCache = null;
-            Buffer.WriteChars(sourceIndex, text, destinationIndex);
+            _toStringCache = null;
+            _buffer.WriteChars(sourceIndex, text, destinationIndex);
         }
 
         public void Assign(string text)
         {
-            toStringCache = null;
-            Buffer.Clear();
-            Buffer.Append(text);
+            _toStringCache = null;
+            _buffer.Clear();
+            _buffer.Append(text);
         }
 
         public string Substring(int index) => ToString().Substring(index);
@@ -53,18 +53,18 @@ namespace Hunspell.NetCore.Infrastructure
 
         public void Destroy()
         {
-            if (Buffer != null)
+            if (_buffer != null)
             {
-                StringBuilderPool.Return(Buffer);
+                StringBuilderPool.Return(_buffer);
             }
 
-            toStringCache = null;
-            Buffer = null;
+            _toStringCache = null;
+            _buffer = null;
         }
 
         public override string ToString()
         {
-            return toStringCache ?? (toStringCache = Buffer.ToStringTerminated());
+            return _toStringCache ?? (_toStringCache = _buffer.ToStringTerminated());
         }
 
         public static implicit operator string(SimulatedCString cString)

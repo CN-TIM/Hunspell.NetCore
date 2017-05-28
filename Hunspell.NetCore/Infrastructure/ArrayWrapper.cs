@@ -7,7 +7,7 @@ namespace Hunspell.NetCore.Infrastructure
     public class ArrayWrapper<T> :
         IReadOnlyList<T>
     {
-        internal readonly T[] items;
+        internal readonly T[] Items;
 
         protected ArrayWrapper(T[] items)
         {
@@ -16,39 +16,39 @@ namespace Hunspell.NetCore.Infrastructure
                 throw new ArgumentNullException(nameof(items));
             }
 
-            this.items = items;
+            this.Items = items;
             HasItems = items.Length != 0;
             IsEmpty = !HasItems;
         }
 
-        public T this[int index] => items[index];
+        public T this[int index] => Items[index];
 
-        public int Count => items.Length;
+        public int Count => Items.Length;
 
         public bool HasItems { get; }
 
         public bool IsEmpty { get; }
 
-        public Enumerator GetEnumerator() => new Enumerator(items);
+        public Enumerator GetEnumerator() => new Enumerator(Items);
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => ((IEnumerable<T>)items).GetEnumerator();
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => ((IEnumerable<T>)Items).GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => items.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
 
         public struct Enumerator
         {
-            private readonly T[] values;
-            private int index;
+            private readonly T[] _values;
+            private int _index;
 
             public Enumerator(T[] values)
             {
-                this.values = values;
-                index = -1;
+                this._values = values;
+                _index = -1;
             }
 
-            public T Current => values[index];
+            public T Current => _values[_index];
 
-            public bool MoveNext() => ++index < values.Length;
+            public bool MoveNext() => ++_index < _values.Length;
         }
     }
 
@@ -78,12 +78,12 @@ namespace Hunspell.NetCore.Infrastructure
                 return false;
             }
 
-            return ArrayComparer.Equals(x.items, y.items);
+            return ArrayComparer.Equals(x.Items, y.Items);
         }
 
         public int GetHashCode(TCollection obj)
         {
-            return ArrayComparer.GetHashCode(obj.items);
+            return ArrayComparer.GetHashCode(obj.Items);
         }
     }
 }

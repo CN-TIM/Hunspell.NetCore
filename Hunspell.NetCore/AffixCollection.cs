@@ -19,11 +19,11 @@ namespace Hunspell.NetCore
             FlagSet.Empty
         );
 
-        private readonly Dictionary<FlagValue, AffixEntryGroup<TEntry>> affixesByFlag;
+        private readonly Dictionary<FlagValue, AffixEntryGroup<TEntry>> _affixesByFlag;
 
-        private readonly Dictionary<char, AffixEntryWithDetailCollection<TEntry>> affixesByIndexedByKey;
+        private readonly Dictionary<char, AffixEntryWithDetailCollection<TEntry>> _affixesByIndexedByKey;
 
-        private readonly AffixEntryWithDetailCollection<TEntry> affixesWithDots;
+        private readonly AffixEntryWithDetailCollection<TEntry> _affixesWithDots;
 
         private AffixCollection
         (
@@ -34,9 +34,9 @@ namespace Hunspell.NetCore
             FlagSet contClasses
         )
         {
-            this.affixesByFlag = affixesByFlag;
-            this.affixesByIndexedByKey = affixesByIndexedByKey;
-            this.affixesWithDots = affixesWithDots;
+            this._affixesByFlag = affixesByFlag;
+            this._affixesByIndexedByKey = affixesByIndexedByKey;
+            this._affixesWithDots = affixesWithDots;
             AffixesWithEmptyKeys = affixesWithEmptyKeys;
             ContClasses = contClasses;
             HasAffixes = affixesByFlag.Count != 0;
@@ -121,7 +121,7 @@ namespace Hunspell.NetCore
         public AffixEntryGroup<TEntry> GetByFlag(FlagValue flag)
         {
             AffixEntryGroup<TEntry> result;
-            affixesByFlag.TryGetValue(flag, out result);
+            _affixesByFlag.TryGetValue(flag, out result);
             return result;
         }
 
@@ -148,7 +148,7 @@ namespace Hunspell.NetCore
             var results = new List<AffixEntryWithDetail<TEntry>>();
 
             AffixEntryWithDetailCollection<TEntry> indexedEntries;
-            if (affixesByIndexedByKey.TryGetValue(word[0], out indexedEntries))
+            if (_affixesByIndexedByKey.TryGetValue(word[0], out indexedEntries))
             {
                 foreach (var entry in indexedEntries)
                 {
@@ -159,9 +159,9 @@ namespace Hunspell.NetCore
                 }
             }
 
-            if (affixesWithDots.HasItems)
+            if (_affixesWithDots.HasItems)
             {
-                foreach (var entry in affixesWithDots)
+                foreach (var entry in _affixesWithDots)
                 {
                     if (StringEx.IsSubset(entry.Key, word))
                     {
@@ -178,7 +178,7 @@ namespace Hunspell.NetCore
             var results = new List<AffixEntryWithDetail<TEntry>>();
 
             AffixEntryWithDetailCollection<TEntry> indexedEntries;
-            if (affixesByIndexedByKey.TryGetValue(word[word.Length - 1], out indexedEntries))
+            if (_affixesByIndexedByKey.TryGetValue(word[word.Length - 1], out indexedEntries))
             {
                 foreach (var entry in indexedEntries)
                 {
@@ -189,9 +189,9 @@ namespace Hunspell.NetCore
                 }
             }
 
-            if (affixesWithDots.HasItems)
+            if (_affixesWithDots.HasItems)
             {
-                foreach (var entry in affixesWithDots)
+                foreach (var entry in _affixesWithDots)
                 {
                     if (StringEx.IsReverseSubset(entry.Key, word))
                     {
@@ -205,12 +205,12 @@ namespace Hunspell.NetCore
 
         public IEnumerator<AffixEntryGroup<TEntry>> GetEnumerator()
         {
-            return affixesByFlag.Values.GetEnumerator();
+            return _affixesByFlag.Values.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return affixesByFlag.Values.GetEnumerator();
+            return _affixesByFlag.Values.GetEnumerator();
         }
     }
 }

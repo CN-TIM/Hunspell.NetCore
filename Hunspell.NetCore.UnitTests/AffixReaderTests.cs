@@ -1667,7 +1667,7 @@ namespace Hunspell.NetCore.Tests
                     .ToList();
             }
 
-            public static string[] can_read_file_without_exception_warning_exceptions = new[]
+            public static string[] CanReadFileWithoutExceptionWarningExceptions = new[]
             {
                 "base_utf.aff" // this file has some strange morph lines at the bottom, maybe a bug?
             };
@@ -1679,7 +1679,7 @@ namespace Hunspell.NetCore.Tests
 
                 actual.Should().NotBeNull();
 
-                if (!can_read_file_without_exception_warning_exceptions.Contains(Path.GetFileName(filePath)))
+                if (!CanReadFileWithoutExceptionWarningExceptions.Contains(Path.GetFileName(filePath)))
                 {
                     actual.Warnings.Should().BeEmpty();
                 }

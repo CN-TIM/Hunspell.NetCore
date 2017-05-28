@@ -16,7 +16,7 @@ namespace Hunspell.NetCore
     {
         static DynamicEncodingLineReader()
         {
-            PreambleEncodings =
+            _preambleEncodings =
                 new Encoding[]
                 {
                     new UnicodeEncoding(true, true)
@@ -24,19 +24,15 @@ namespace Hunspell.NetCore
                     ,Encoding.UTF8
                 };
 
-            MaxPreambleBytes = PreambleEncodings.Max(e => e.GetPreamble().Length);
+            _maxPreambleBytes = _preambleEncodings.Max(e => e.GetPreamble().Length);
         }
 
-        private static readonly Regex SetEncodingRegex = new Regex(
-            @"^[\t ]*SET[\t ]+([^\t ]+)[\t ]*$",
-#if !NO_COMPILED_REGEX
-            RegexOptions.Compiled |
-#endif
-            RegexOptions.CultureInvariant);
+        private static readonly Regex _setEncodingRegex = new Regex(
+            @"^[\t ]*SET[\t ]+([^\t ]+)[\t ]*$", RegexOptions.CultureInvariant);    //netstandard1.1 doesn't have RegexOptions.Compiled
 
-        private static readonly Encoding[] PreambleEncodings;
+        private static readonly Encoding[] _preambleEncodings;
 
-        private static readonly int MaxPreambleBytes;
+        private static readonly int _maxPreambleBytes;
 
         public DynamicEncodingLineReader(Stream stream, Encoding initialEncoding)
         {
@@ -49,21 +45,21 @@ namespace Hunspell.NetCore
                 throw new ArgumentNullException(nameof(initialEncoding));
             }
 
-            this.stream = stream;
-            encoding = initialEncoding;
-            decoder = initialEncoding.GetDecoder();
+            this._stream = stream;
+            _encoding = initialEncoding;
+            _decoder = initialEncoding.GetDecoder();
         }
 
-        private readonly Stream stream;
-        private Encoding encoding;
-        private Decoder decoder;
+        private readonly Stream _stream;
+        private Encoding _encoding;
+        private Decoder _decoder;
 
-        private readonly int bufferMaxSize = 4096;
-        private byte[] buffer = null;
-        private int bufferIndex = -1;
-        private bool hasCheckedForPreamble = false;
+        private readonly int _bufferMaxSize = 4096;
+        private byte[] _buffer = null;
+        private int _bufferIndex = -1;
+        private bool _hasCheckedForPreamble = false;
 
-        public Encoding CurrentEncoding => encoding;
+        public Encoding CurrentEncoding => _encoding;
 
 #if !NO_IO_FILE
         public static List<string> ReadLines(string filePath, Encoding defaultEncoding)
@@ -90,7 +86,7 @@ namespace Hunspell.NetCore
 
         public string ReadLine()
         {
-            if (!hasCheckedForPreamble)
+            if (!_hasCheckedForPreamble)
             {
                 ReadPreamble();
             }
@@ -178,9 +174,9 @@ namespace Hunspell.NetCore
 
         private char[] ReadNextChars()
         {
-            var maxBytes = encoding.GetMaxByteCount(1);
+            var maxBytes = _encoding.GetMaxByteCount(1);
             var bytesReadIntoCharBuffer = 0;
-            var charOutBuffer = new char[encoding.GetMaxCharCount(maxBytes)];
+            var charOutBuffer = new char[_encoding.GetMaxCharCount(maxBytes)];
 
             while (bytesReadIntoCharBuffer < maxBytes)
             {
@@ -246,7 +242,7 @@ namespace Hunspell.NetCore
             int charsProduced;
             bool completed;
 
-            decoder.Convert(
+            _decoder.Convert(
                     bytes,
                     0,
                     bytes.Length,
@@ -263,7 +259,7 @@ namespace Hunspell.NetCore
 
         private bool ReadPreamble()
         {
-            var possiblePreambleBytes = ReadBytes(MaxPreambleBytes);
+            var possiblePreambleBytes = ReadBytes(_maxPreambleBytes);
             return HandlePreambleBytes(possiblePreambleBytes);
         }
 
@@ -283,7 +279,7 @@ namespace Hunspell.NetCore
             }
 
             int? bytesToRestore = null;
-            foreach (var candidateEncoding in PreambleEncodings)
+            foreach (var candidateEncoding in _preambleEncodings)
             {
                 var encodingPreamble = candidateEncoding.GetPreamble();
                 if (encodingPreamble == null || encodingPreamble.Length == 0)
@@ -297,14 +293,14 @@ namespace Hunspell.NetCore
                 )
                 {
                     bytesToRestore = possiblePreambleBytes.Length - encodingPreamble.Length;
-                    encoding = candidateEncoding;
+                    _encoding = candidateEncoding;
                     break;
                 }
             }
 
             RevertReadBytes(bytesToRestore ?? possiblePreambleBytes.Length);
 
-            hasCheckedForPreamble = true;
+            _hasCheckedForPreamble = true;
             return true;
         }
 
@@ -350,18 +346,18 @@ namespace Hunspell.NetCore
 
         private void HandleReadBytesIncrement(byte[] result, ref int bytesNeeded, ref int resultOffset)
         {
-            var bytesLeftInBuffer = buffer.Length - bufferIndex;
+            var bytesLeftInBuffer = _buffer.Length - _bufferIndex;
             if (bytesNeeded >= bytesLeftInBuffer)
             {
-                Buffer.BlockCopy(buffer, bufferIndex, result, resultOffset, bytesLeftInBuffer);
-                bufferIndex = buffer.Length;
+                Buffer.BlockCopy(_buffer, _bufferIndex, result, resultOffset, bytesLeftInBuffer);
+                _bufferIndex = _buffer.Length;
                 resultOffset += bytesLeftInBuffer;
                 bytesNeeded -= bytesLeftInBuffer;
             }
             else
             {
-                Buffer.BlockCopy(buffer, bufferIndex, result, resultOffset, bytesNeeded);
-                bufferIndex += bytesNeeded;
+                Buffer.BlockCopy(_buffer, _bufferIndex, result, resultOffset, bytesNeeded);
+                _bufferIndex += bytesNeeded;
                 resultOffset += bytesNeeded;
                 bytesNeeded = 0;
             }
@@ -369,13 +365,13 @@ namespace Hunspell.NetCore
 
         private bool PrepareBuffer()
         {
-            if (buffer != null && bufferIndex < buffer.Length)
+            if (_buffer != null && _bufferIndex < _buffer.Length)
             {
                 return true;
             }
 
-            buffer = new byte[bufferMaxSize];
-            var readBytesCount = stream.Read(buffer, 0, buffer.Length);
+            _buffer = new byte[_bufferMaxSize];
+            var readBytesCount = _stream.Read(_buffer, 0, _buffer.Length);
 
             return HandlePrepareBufferRead(readBytesCount);
         }
@@ -397,12 +393,12 @@ namespace Hunspell.NetCore
 
         private bool HandlePrepareBufferRead(int readBytesCount)
         {
-            if (readBytesCount != buffer.Length)
+            if (readBytesCount != _buffer.Length)
             {
-                Array.Resize(ref buffer, readBytesCount);
+                Array.Resize(ref _buffer, readBytesCount);
             }
 
-            bufferIndex = 0;
+            _bufferIndex = 0;
             return readBytesCount != 0;
         }
 
@@ -413,23 +409,23 @@ namespace Hunspell.NetCore
                 return;
             }
 
-            if (buffer == null)
+            if (_buffer == null)
             {
                 throw new InvalidOperationException();
             }
 
-            var revertedIndex = bufferIndex - count;
-            if (revertedIndex < 0 || revertedIndex >= buffer.Length)
+            var revertedIndex = _bufferIndex - count;
+            if (revertedIndex < 0 || revertedIndex >= _buffer.Length)
             {
                 throw new InvalidOperationException();
             }
 
-            bufferIndex = revertedIndex;
+            _bufferIndex = revertedIndex;
         }
 
         private string ProcessLine(string rawLine)
         {
-            var setEncodingMatch = SetEncodingRegex.Match(rawLine);
+            var setEncodingMatch = _setEncodingRegex.Match(rawLine);
             if (setEncodingMatch.Success)
             {
                 ChangeEncoding(setEncodingMatch.Groups[1].Value);
@@ -441,18 +437,18 @@ namespace Hunspell.NetCore
         private void ChangeEncoding(string encodingName)
         {
             var newEncoding = EncodingEx.GetEncodingByName(encodingName);
-            if (newEncoding == null || ReferenceEquals(newEncoding, encoding) || encoding.Equals(newEncoding))
+            if (newEncoding == null || ReferenceEquals(newEncoding, _encoding) || _encoding.Equals(newEncoding))
             {
                 return;
             }
 
-            decoder = newEncoding.GetDecoder();
-            encoding = newEncoding;
+            _decoder = newEncoding.GetDecoder();
+            _encoding = newEncoding;
         }
 
         public void Dispose()
         {
-            stream.Dispose();
+            _stream.Dispose();
         }
     }
 }

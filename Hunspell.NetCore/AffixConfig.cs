@@ -12,7 +12,7 @@ namespace Hunspell.NetCore
         {
         }
 
-        private AffixConfigOptions options;
+        private AffixConfigOptions _options;
 
         /// <summary>
         /// The flag type.
@@ -31,25 +31,25 @@ namespace Hunspell.NetCore
         /// </summary>
         public AffixConfigOptions Options
         {
-            get => options;
+            get => _options;
             private set
             {
-                options = value;
-                ComplexPrefixes = EnumEx.HasFlag(options, AffixConfigOptions.ComplexPrefixes);
-                CompoundMoreSuffixes = EnumEx.HasFlag(options, AffixConfigOptions.CompoundMoreSuffixes);
-                CheckCompoundDup = EnumEx.HasFlag(options, AffixConfigOptions.CheckCompoundDup);
-                CheckCompoundRep = EnumEx.HasFlag(options, AffixConfigOptions.CheckCompoundRep);
-                CheckCompoundTriple = EnumEx.HasFlag(options, AffixConfigOptions.CheckCompoundTriple);
-                SimplifiedTriple = EnumEx.HasFlag(options, AffixConfigOptions.SimplifiedTriple);
-                CheckCompoundCase = EnumEx.HasFlag(options, AffixConfigOptions.CheckCompoundCase);
-                CheckNum = EnumEx.HasFlag(options, AffixConfigOptions.CheckNum);
-                OnlyMaxDiff = EnumEx.HasFlag(options, AffixConfigOptions.OnlyMaxDiff);
-                NoSplitSuggestions = EnumEx.HasFlag(options, AffixConfigOptions.NoSplitSuggestions);
-                FullStrip = EnumEx.HasFlag(options, AffixConfigOptions.FullStrip);
-                SuggestWithDots = EnumEx.HasFlag(options, AffixConfigOptions.SuggestWithDots);
-                ForbidWarn = EnumEx.HasFlag(options, AffixConfigOptions.ForbidWarn);
-                CheckSharps = EnumEx.HasFlag(options, AffixConfigOptions.CheckSharps);
-                SimplifiedCompound = EnumEx.HasFlag(options, AffixConfigOptions.SimplifiedCompound);
+                _options = value;
+                ComplexPrefixes = EnumEx.HasFlag(_options, AffixConfigOptions.ComplexPrefixes);
+                CompoundMoreSuffixes = EnumEx.HasFlag(_options, AffixConfigOptions.CompoundMoreSuffixes);
+                CheckCompoundDup = EnumEx.HasFlag(_options, AffixConfigOptions.CheckCompoundDup);
+                CheckCompoundRep = EnumEx.HasFlag(_options, AffixConfigOptions.CheckCompoundRep);
+                CheckCompoundTriple = EnumEx.HasFlag(_options, AffixConfigOptions.CheckCompoundTriple);
+                SimplifiedTriple = EnumEx.HasFlag(_options, AffixConfigOptions.SimplifiedTriple);
+                CheckCompoundCase = EnumEx.HasFlag(_options, AffixConfigOptions.CheckCompoundCase);
+                CheckNum = EnumEx.HasFlag(_options, AffixConfigOptions.CheckNum);
+                OnlyMaxDiff = EnumEx.HasFlag(_options, AffixConfigOptions.OnlyMaxDiff);
+                NoSplitSuggestions = EnumEx.HasFlag(_options, AffixConfigOptions.NoSplitSuggestions);
+                FullStrip = EnumEx.HasFlag(_options, AffixConfigOptions.FullStrip);
+                SuggestWithDots = EnumEx.HasFlag(_options, AffixConfigOptions.SuggestWithDots);
+                ForbidWarn = EnumEx.HasFlag(_options, AffixConfigOptions.ForbidWarn);
+                CheckSharps = EnumEx.HasFlag(_options, AffixConfigOptions.CheckSharps);
+                SimplifiedCompound = EnumEx.HasFlag(_options, AffixConfigOptions.SimplifiedCompound);
             }
         }
 
@@ -568,26 +568,26 @@ namespace Hunspell.NetCore
         /// work/AB
         /// </code>
         /// </example>
-        public IEnumerable<FlagSet> AliasF => aliasF;
+        public IEnumerable<FlagSet> AliasF => _aliasF;
 
-        private List<FlagSet> aliasF;
+        private List<FlagSet> _aliasF;
 
         /// <summary>
         /// Inidicates if any <see cref="AliasF"/> entries have been defined.
         /// </summary>
-        public bool IsAliasF => aliasF != null && aliasF.Count != 0;
+        public bool IsAliasF => _aliasF != null && _aliasF.Count != 0;
 
-        private List<MorphSet> aliasM;
+        private List<MorphSet> _aliasM;
 
         /// <summary>
         /// Values used for morphological alias compression.
         /// </summary>
-        public IEnumerable<MorphSet> AliasM => aliasM;
+        public IEnumerable<MorphSet> AliasM => _aliasM;
 
         /// <summary>
         /// Indicates if any <see cref="AliasM"/> entries have been defined.
         /// </summary>
-        public bool IsAliasM => aliasM != null && aliasM.Count != 0;
+        public bool IsAliasM => _aliasM != null && _aliasM.Count != 0;
 
         /// <summary>
         /// Defines custom compound patterns with a regex-like syntax.
@@ -816,9 +816,9 @@ namespace Hunspell.NetCore
 
         public bool TryGetAliasF(int number, out FlagSet result)
         {
-            if (number > 0 && number <= aliasF.Count)
+            if (number > 0 && number <= _aliasF.Count)
             {
-                result = aliasF[number - 1];
+                result = _aliasF[number - 1];
                 return true;
             }
             else
@@ -830,9 +830,9 @@ namespace Hunspell.NetCore
 
         public bool TryGetAliasM(int number, out MorphSet result)
         {
-            if (number > 0 && number <= aliasM.Count)
+            if (number > 0 && number <= _aliasM.Count)
             {
-                result = aliasM[number - 1];
+                result = _aliasM[number - 1];
                 return true;
             }
             else

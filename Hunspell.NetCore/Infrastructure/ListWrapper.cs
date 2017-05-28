@@ -7,7 +7,7 @@ namespace Hunspell.NetCore.Infrastructure
     public class ListWrapper<T> :
         IReadOnlyList<T>
     {
-        protected readonly List<T> items;
+        protected readonly List<T> Items;
 
         protected ListWrapper(List<T> items)
         {
@@ -16,39 +16,39 @@ namespace Hunspell.NetCore.Infrastructure
                 throw new ArgumentNullException(nameof(items));
             }
 
-            this.items = items;
+            this.Items = items;
             HasItems = items.Count != 0;
             IsEmpty = !HasItems;
         }
 
-        public T this[int index] => items[index];
+        public T this[int index] => Items[index];
 
-        public int Count => items.Count;
+        public int Count => Items.Count;
 
         public bool HasItems { get; }
 
         public bool IsEmpty { get; }
 
-        public Enumerator GetEnumerator() => new Enumerator(items);
+        public Enumerator GetEnumerator() => new Enumerator(Items);
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => ((IEnumerable<T>)items).GetEnumerator();
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => ((IEnumerable<T>)Items).GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => items.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
 
         public struct Enumerator
         {
-            private readonly List<T> values;
-            private int index;
+            private readonly List<T> _values;
+            private int _index;
 
             public Enumerator(List<T> values)
             {
-                this.values = values;
-                index = -1;
+                this._values = values;
+                _index = -1;
             }
 
-            public T Current => values[index];
+            public T Current => _values[_index];
 
-            public bool MoveNext() => ++index < values.Count;
+            public bool MoveNext() => ++_index < _values.Count;
         }
 
         public class Comparer : IEqualityComparer<ListWrapper<T>>
@@ -78,12 +78,12 @@ namespace Hunspell.NetCore.Infrastructure
                     return false;
                 }
 
-                return ListComparer.Equals(x.items, y.items);
+                return ListComparer.Equals(x.Items, y.Items);
             }
 
             public int GetHashCode(ListWrapper<T> obj)
             {
-                return ListComparer.GetHashCode(obj.items);
+                return ListComparer.GetHashCode(obj.Items);
             }
         }
     }

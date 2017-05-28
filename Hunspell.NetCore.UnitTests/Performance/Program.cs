@@ -53,7 +53,7 @@ namespace Hunspell.NetCore.Tests.Performance
             }
         }
 
-        private static readonly char[] CommonWordSplitChars = new[] { ' ', '\t', ',' };
+        private static readonly char[] _commonWordSplitChars = new[] { ' ', '\t', ',' };
 
         private static IEnumerable<string> ReadWords()
         {
@@ -61,7 +61,7 @@ namespace Hunspell.NetCore.Tests.Performance
                 .Where(line => !string.IsNullOrEmpty(line))
                 .Select(line => line.Trim())
                 .Where(line => line.Length != 0 && !line.StartsWith("#") && !line.StartsWith("["))
-                .SelectMany(line => line.Split(CommonWordSplitChars, StringSplitOptions.RemoveEmptyEntries));
+                .SelectMany(line => line.Split(_commonWordSplitChars, StringSplitOptions.RemoveEmptyEntries));
         }
     }
 }

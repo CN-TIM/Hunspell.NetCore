@@ -13,11 +13,11 @@ namespace Hunspell.NetCore
             /// <summary>
             /// Timelimit: max ~1/4 sec (process time on Linux) for a time consuming function.
             /// </summary>
-            private const int TimeLimit = 1000 >> 2;
+            private const int _timeLimit = 1000 >> 2;
 
-            private const int MinTimer = 100;
+            private const int _minTimer = 100;
 
-            private const int MaxPlusTimer = 100;
+            private const int _maxPlusTimer = 100;
 
             public QuerySuggest(string word, WordList wordList)
                 : base(word, wordList)
@@ -538,7 +538,7 @@ namespace Hunspell.NetCore
                 var candidate = StringBuilderPool.Get(word, word.Length);
 
                 long? timeLimit = Environment.TickCount;
-                int? timer = MinTimer;
+                int? timer = _minTimer;
 
                 // swap out each char one by one and try all the tryme
                 // chars in its place to see if that makes a good word
@@ -631,7 +631,7 @@ namespace Hunspell.NetCore
                 }
 
                 var candidate = StringBuilderPool.Get(word, word.Length + 1);
-                int? timer = MinTimer;
+                int? timer = _minTimer;
                 long? timeLimit = Environment.TickCount;
 
                 // try inserting a tryme character before every letter (and the null terminator)
@@ -822,7 +822,7 @@ namespace Hunspell.NetCore
                 }
 
                 var candidate = string.Empty;
-                int? timer = MinTimer;
+                int? timer = _minTimer;
                 long? timeLimit = Environment.TickCount;
 
                 return MapRelated(word, ref candidate, 0, wlst, cpdSuggest, ref timer, ref timeLimit);
@@ -956,12 +956,12 @@ namespace Hunspell.NetCore
                     timer--;
                     if (timer == 0 && timeLimit.HasValue)
                     {
-                        if (Environment.TickCount - timeLimit.GetValueOrDefault() > TimeLimit)
+                        if (Environment.TickCount - timeLimit.GetValueOrDefault() > _timeLimit)
                         {
                             return 0;
                         }
 
-                        timer = MaxPlusTimer;
+                        timer = _maxPlusTimer;
                     }
                 }
 

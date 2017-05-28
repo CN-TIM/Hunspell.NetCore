@@ -16,13 +16,13 @@ namespace Hunspell.NetCore
         {
         }
 
-        public bool AllowsAnySingleCharacter => items.Length == 1 && items[0].AllowsAny;
+        public bool AllowsAnySingleCharacter => Items.Length == 1 && Items[0].AllowsAny;
 
         internal static CharacterConditionGroup TakeArray(CharacterCondition[] conditions) => conditions == null ? Empty : new CharacterConditionGroup(conditions);
 
         public static CharacterConditionGroup Create(CharacterCondition condition) => TakeArray(new[] { condition });
 
-        public string GetEncoded() => string.Concat(items.Select(c => c.GetEncoded()));
+        public string GetEncoded() => string.Concat(Items.Select(c => c.GetEncoded()));
 
         public override string ToString() => GetEncoded();
 
@@ -33,14 +33,14 @@ namespace Hunspell.NetCore
         /// <returns>True when the start of the <paramref name="text"/> is matched by the conditions.</returns>
         public bool IsStartingMatch(string text)
         {
-            if (string.IsNullOrEmpty(text) || items.Length > text.Length)
+            if (string.IsNullOrEmpty(text) || Items.Length > text.Length)
             {
                 return false;
             }
 
-            for (int i = 0; i < items.Length; i++)
+            for (int i = 0; i < Items.Length; i++)
             {
-                if (!items[i].IsMatch(text[i]))
+                if (!Items[i].IsMatch(text[i]))
                 {
                     return false;
                 }
@@ -56,14 +56,14 @@ namespace Hunspell.NetCore
         /// <returns>True when the end of the <paramref name="text"/> is matched by the conditions.</returns>
         public bool IsEndingMatch(string text)
         {
-            if (items.Length > text.Length)
+            if (Items.Length > text.Length)
             {
                 return false;
             }
 
-            for (int conditionIndex = items.Length - 1, textIndex = text.Length - 1; conditionIndex >= 0; conditionIndex--, textIndex--)
+            for (int conditionIndex = Items.Length - 1, textIndex = text.Length - 1; conditionIndex >= 0; conditionIndex--, textIndex--)
             {
-                if (!items[conditionIndex].IsMatch(text[textIndex]))
+                if (!Items[conditionIndex].IsMatch(text[textIndex]))
                 {
                     return false;
                 }
@@ -79,14 +79,14 @@ namespace Hunspell.NetCore
         /// <returns>True when the end of the <paramref name="text"/> is matched by the conditions.</returns>
         internal bool IsEndingMatch(StringSlice text)
         {
-            if (items.Length > text.Length)
+            if (Items.Length > text.Length)
             {
                 return false;
             }
 
-            for (int conditionIndex = items.Length - 1, textIndex = text.Length - 1; conditionIndex >= 0; conditionIndex--, textIndex--)
+            for (int conditionIndex = Items.Length - 1, textIndex = text.Length - 1; conditionIndex >= 0; conditionIndex--, textIndex--)
             {
-                if (!items[conditionIndex].IsMatch(text.Text[text.Offset + textIndex]))
+                if (!Items[conditionIndex].IsMatch(text.Text[text.Offset + textIndex]))
                 {
                     return false;
                 }
@@ -97,14 +97,14 @@ namespace Hunspell.NetCore
 
         public bool IsOnlyPossibleMatch(string text)
         {
-            if (string.IsNullOrEmpty(text) || items.Length != text.Length)
+            if (string.IsNullOrEmpty(text) || Items.Length != text.Length)
             {
                 return false;
             }
 
             for (var i = 0; i < text.Length; i++)
             {
-                var condition = items[i];
+                var condition = Items[i];
                 if (!condition.PermitsSingleCharacter || condition.Characters[0] != text[i])
                 {
                     return false;

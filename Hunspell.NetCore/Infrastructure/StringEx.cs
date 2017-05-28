@@ -6,13 +6,13 @@ namespace Hunspell.NetCore.Infrastructure
 {
     internal static class StringEx
     {
-        private static readonly char[] SpaceOrTab = new[] { ' ', '\t' };
+        private static readonly char[] _spaceOrTab = new[] { ' ', '\t' };
 
         public static bool StartsWith(this string @this, char character) => @this.Length != 0 && @this[0] == character;
 
         public static bool EndsWith(this string @this, char character) => @this.Length != 0 && @this[@this.Length - 1] == character;
 
-        public static string[] SplitOnTabOrSpace(this string @this) => @this.Split(SpaceOrTab, StringSplitOptions.RemoveEmptyEntries);
+        public static string[] SplitOnTabOrSpace(this string @this) => @this.Split(_spaceOrTab, StringSplitOptions.RemoveEmptyEntries);
 
         public static bool IsNullOrWhiteSpace(string value) => string.IsNullOrWhiteSpace(value);
 

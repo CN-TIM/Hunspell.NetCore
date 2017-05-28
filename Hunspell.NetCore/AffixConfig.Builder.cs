@@ -11,13 +11,13 @@ namespace Hunspell.NetCore
     {
         public sealed class Builder
         {
-            private const int DefaultCompoundMinLength = 3;
+            private const int _defaultCompoundMinLength = 3;
 
-            private const int DefaultMaxNgramSuggestions = 4;
+            private const int _defaultMaxNgramSuggestions = 4;
 
-            private const int DefaultMaxCompoundSuggestions = 3;
+            private const int _defaultMaxCompoundSuggestions = 3;
 
-            private const string DefaultKeyString = "qwertyuiop|asdfghjkl|zxcvbnm";
+            private const string _defaultKeyString = "qwertyuiop|asdfghjkl|zxcvbnm";
 
             internal readonly Deduper<FlagSet> FlagSetDeduper;
 
@@ -375,7 +375,7 @@ namespace Hunspell.NetCore
                 {
                     Options = Options,
                     FlagMode = FlagMode,
-                    KeyString = Dedup(KeyString ?? DefaultKeyString),
+                    KeyString = Dedup(KeyString ?? _defaultKeyString),
                     TryString = Dedup(TryString ?? string.Empty),
                     Language = Dedup(Language ?? string.Empty),
                     Culture = culture,
@@ -386,7 +386,7 @@ namespace Hunspell.NetCore
                     CompoundEnd = CompoundEnd,
                     CompoundMiddle = CompoundMiddle,
                     CompoundWordMax = CompoundWordMax,
-                    CompoundMin = CompoundMin ?? DefaultCompoundMinLength,
+                    CompoundMin = CompoundMin ?? _defaultCompoundMinLength,
                     CompoundRoot = CompoundRoot,
                     CompoundPermitFlag = CompoundPermitFlag,
                     CompoundForbidFlag = CompoundForbidFlag,
@@ -397,9 +397,9 @@ namespace Hunspell.NetCore
                     Circumfix = Circumfix,
                     OnlyInCompound = OnlyInCompound,
                     NeedAffix = NeedAffix,
-                    MaxNgramSuggestions = MaxNgramSuggestions ?? DefaultMaxNgramSuggestions,
+                    MaxNgramSuggestions = MaxNgramSuggestions ?? _defaultMaxNgramSuggestions,
                     MaxDifferency = MaxDifferency,
-                    MaxCompoundSuggestions = MaxCompoundSuggestions ?? DefaultMaxCompoundSuggestions,
+                    MaxCompoundSuggestions = MaxCompoundSuggestions ?? _defaultMaxCompoundSuggestions,
                     KeepCase = KeepCase,
                     ForceUpperCase = ForceUpperCase,
                     Warn = Warn,
@@ -425,9 +425,9 @@ namespace Hunspell.NetCore
                     config.OutputConversions = MultiReplacementTable.TakeDictionary(Steal(ref OutputConversions));
                     config.Warnings = WarningList.TakeList(Steal(ref Warnings));
 
-                    config.aliasF = AliasF ?? new List<FlagSet>(0);
+                    config._aliasF = AliasF ?? new List<FlagSet>(0);
                     AliasF = null;
-                    config.aliasM = AliasM ?? new List<MorphSet>(0);
+                    config._aliasM = AliasM ?? new List<MorphSet>(0);
                     AliasM = null;
                 }
                 else
@@ -441,8 +441,8 @@ namespace Hunspell.NetCore
                     config.OutputConversions = MultiReplacementTable.Create(OutputConversions);
                     config.Warnings = WarningList.Create(Warnings);
 
-                    config.aliasF = AliasF == null ? new List<FlagSet>(0) : AliasF.ToList();
-                    config.aliasM = AliasM == null ? new List<MorphSet>(0) : AliasM.ToList();
+                    config._aliasF = AliasF == null ? new List<FlagSet>(0) : AliasF.ToList();
+                    config._aliasM = AliasM == null ? new List<MorphSet>(0) : AliasM.ToList();
                 }
 
                 config.Prefixes = AffixCollection<PrefixEntry>.Create(Prefixes);

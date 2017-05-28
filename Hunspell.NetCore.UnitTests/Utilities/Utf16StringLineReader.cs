@@ -6,9 +6,9 @@ namespace Hunspell.NetCore.Tests.Utilities
 {
     public class Utf16StringLineReader : IHunspellLineReader
     {
-        private static readonly char[] LineBreakChars = new[]{'\n','\r'};
+        private static readonly char[] _lineBreakChars = new[]{'\n','\r'};
 
-        private int position = 0;
+        private int _position = 0;
 
         private string Content { get; }
 
@@ -22,21 +22,21 @@ namespace Hunspell.NetCore.Tests.Utilities
         public Task<string> ReadLineAsync()
         {
             string result;
-            if (Content == null || position >= Content.Length)
+            if (Content == null || _position >= Content.Length)
             {
                 result = null;
             }
             else
             {
-                var startPosition = position;
-                position = Content.IndexOfAny(LineBreakChars, position);
-                if (position < 0)
+                var startPosition = _position;
+                _position = Content.IndexOfAny(_lineBreakChars, _position);
+                if (_position < 0)
                 {
-                    position = Content.Length;
+                    _position = Content.Length;
                 }
 
-                result = Content.Substring(startPosition, position - startPosition);
-                for(;position < Content.Length && LineBreakChars.Contains(Content[position]); position++)
+                result = Content.Substring(startPosition, _position - startPosition);
+                for(;_position < Content.Length && _lineBreakChars.Contains(Content[_position]); _position++)
                 {
                     ;
                 }

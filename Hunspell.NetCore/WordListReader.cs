@@ -19,14 +19,14 @@ namespace Hunspell.NetCore
             Affix = affix;
         }
 
-        private static readonly Regex InitialLineRegex = new Regex(@"^\s*(\d+)\s*(?:[#].*)?$",
+        private static readonly Regex _initialLineRegex = new Regex(@"^\s*(\d+)\s*(?:[#].*)?$",
             RegexOptions.CultureInvariant);    // RegexOptions.Compiled doesn't exist in netstandard1.1
 
         private WordList.Builder Builder { get; }
 
         private AffixConfig Affix { get; }
 
-        private bool hasInitialized;
+        private bool _hasInitialized;
 
 #if !NO_ASYNC
         public static async Task<WordList> ReadAsync(Stream dictionaryStream, Stream affixStream)
@@ -166,7 +166,7 @@ namespace Hunspell.NetCore
                 return true;
             }
 
-            if (!hasInitialized && AttemptToProcessInitializationLine(line))
+            if (!_hasInitialized && AttemptToProcessInitializationLine(line))
             {
                 return true;
             }
@@ -236,9 +236,9 @@ namespace Hunspell.NetCore
 
         private bool AttemptToProcessInitializationLine(string line)
         {
-            hasInitialized = true;
+            _hasInitialized = true;
 
-            var initLineMatch = InitialLineRegex.Match(line);
+            var initLineMatch = _initialLineRegex.Match(line);
             if (initLineMatch.Success)
             {
                 int expectedSize;
@@ -416,7 +416,7 @@ namespace Hunspell.NetCore
             public string Flags;
             public string[] Morphs;
 
-            private static readonly Regex MorphPartRegex = new Regex(@"\G([\t ]+(?<morphs>[^\t ]+))*[\t ]*$",
+            private static readonly Regex _morphPartRegex = new Regex(@"\G([\t ]+(?<morphs>[^\t ]+))*[\t ]*$",
                 RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture);    // RegexOptions.Compiled doesn't exist in netstandard1.1
 
             public static ParsedWordLine Parse(string line)
@@ -448,7 +448,7 @@ namespace Hunspell.NetCore
                     if (!string.IsNullOrEmpty(word))
                     {
                         var morphGroup = endOfWordAndFlagsPosition >= 0 && endOfWordAndFlagsPosition != line.Length
-                            ? MorphPartRegex.Match(line, endOfWordAndFlagsPosition).Groups["morphs"]
+                            ? _morphPartRegex.Match(line, endOfWordAndFlagsPosition).Groups["morphs"]
                             : null;
 
                         return new ParsedWordLine

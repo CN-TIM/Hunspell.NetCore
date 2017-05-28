@@ -72,11 +72,11 @@ namespace Hunspell.NetCore.Tests
 
         public class CheckGoodWords : HunspellTests
         {
-            public static IEnumerable<object[]> can_find_good_words_in_dictionary_args =>
+            public static IEnumerable<object[]> CanFindGoodWordsInDictionaryArgs =>
                 GetAllDataFilePaths("*.good")
                     .SelectMany(ToDictionaryWordTestData);
 
-            [Theory, MemberData(nameof(can_find_good_words_in_dictionary_args))]
+            [Theory, MemberData(nameof(CanFindGoodWordsInDictionaryArgs))]
             public async Task can_find_good_words_in_dictionary(string dictionaryFilePath, string word)
             {
                 var hunspell = await HunspellDictionary.FromFileAsync(dictionaryFilePath);
@@ -89,11 +89,11 @@ namespace Hunspell.NetCore.Tests
 
         public class CheckWrongWords : HunspellTests
         {
-            public static IEnumerable<object[]> cant_find_wrong_words_in_dictionary_args =>
+            public static IEnumerable<object[]> CantFindWrongWordsInDictionaryArgs =>
                 GetAllDataFilePaths("*.wrong")
                     .SelectMany(ToDictionaryWordTestData);
 
-            [Theory, MemberData(nameof(cant_find_wrong_words_in_dictionary_args))]
+            [Theory, MemberData(nameof(CantFindWrongWordsInDictionaryArgs))]
             public async Task cant_find_wrong_words_in_dictionary(string dictionaryFilePath, string word)
             {
                 var hunspell = await HunspellDictionary.FromFileAsync(dictionaryFilePath);
@@ -210,7 +210,7 @@ namespace Hunspell.NetCore.Tests
                 untestedSets.Should().BeEmpty();
             }
 
-            private static readonly HashSet<string> ExcludedSuggestionFiles = new HashSet<string>
+            private static readonly HashSet<string> _excludedSuggestionFiles = new HashSet<string>
             {
                 "nosuggest",
                 "onlyincompound",
@@ -225,7 +225,7 @@ namespace Hunspell.NetCore.Tests
             protected static IEnumerable<SuggestionTestSet> GetSuggestionTestFileSets()
             {
                 var suggestionFilePaths = GetAllDataFilePaths("*.sug")
-                    .Where(p => !ExcludedSuggestionFiles.Contains(Path.GetFileNameWithoutExtension(p)));
+                    .Where(p => !_excludedSuggestionFiles.Contains(Path.GetFileNameWithoutExtension(p)));
 
                 foreach (var suggestionFilePath in suggestionFilePaths)
                 {

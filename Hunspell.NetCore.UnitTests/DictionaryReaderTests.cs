@@ -1027,10 +1027,10 @@ namespace Hunspell.NetCore.Tests
                 actual["bar"][0].Morphs.ShouldBeEquivalentTo(new[] { "<BAR" });
             }
 
-            public static IEnumerable<object[]> can_read_file_without_exception_args =>
+            public static IEnumerable<object[]> CanReadFileWithoutExceptionArgs =>
                 Array.ConvertAll(Directory.GetFiles("files/", "*.dic"), filePath => new object[] { filePath });
 
-            [Theory, MemberData(nameof(can_read_file_without_exception_args))]
+            [Theory, MemberData(nameof(CanReadFileWithoutExceptionArgs))]
             public async Task can_read_file_without_exception(string filePath)
             {
                 var actual = await WordListReader.ReadFileAsync(filePath);

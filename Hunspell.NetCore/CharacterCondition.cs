@@ -8,7 +8,7 @@ namespace Hunspell.NetCore
     public struct CharacterCondition :
         IEquatable<CharacterCondition>
     {
-        private static Regex ConditionParsingRegex = new Regex(
+        private static Regex _conditionParsingRegex = new Regex(
             @"^(\[[^\]]*\]|\.|[^\[\]\.])*$", RegexOptions.CultureInvariant);    // RegexOptions.Compiled doesn't exist in netstandard1.1
 
         public static readonly CharacterCondition AllowAny = new CharacterCondition(CharacterSet.Empty, true);
@@ -49,7 +49,7 @@ namespace Hunspell.NetCore
                 return CharacterConditionGroup.Empty;
             }
 
-            var match = ConditionParsingRegex.Match(text);
+            var match = _conditionParsingRegex.Match(text);
             if (!match.Success || match.Groups.Count < 2)
             {
                 return CharacterConditionGroup.Empty;

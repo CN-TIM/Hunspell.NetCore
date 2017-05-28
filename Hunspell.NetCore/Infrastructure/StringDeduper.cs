@@ -12,22 +12,22 @@ namespace Hunspell.NetCore.Infrastructure
 
         public StringDeduper(IEqualityComparer<string> comparer)
         {
-            lookup = new Dictionary<string, string>(comparer);
+            _lookup = new Dictionary<string, string>(comparer);
             Add(string.Empty);
         }
 
-        private readonly Dictionary<string, string> lookup;
+        private readonly Dictionary<string, string> _lookup;
 
         public string GetEqualOrAdd(string item)
         {
             string existing;
-            if (lookup.TryGetValue(item, out existing))
+            if (_lookup.TryGetValue(item, out existing))
             {
                 return existing;
             }
             else
             {
-                lookup[item] = item;
+                _lookup[item] = item;
                 return item;
             }
         }
@@ -35,9 +35,9 @@ namespace Hunspell.NetCore.Infrastructure
         public void Add(string item)
         {
             string existing;
-            if (!lookup.TryGetValue(item, out existing))
+            if (!_lookup.TryGetValue(item, out existing))
             {
-                lookup[item] = item;
+                _lookup[item] = item;
             }
         }
     }

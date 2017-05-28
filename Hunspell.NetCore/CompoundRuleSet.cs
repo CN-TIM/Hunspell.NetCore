@@ -21,7 +21,7 @@ namespace Hunspell.NetCore
 
         public bool EntryContainsRuleFlags(WordEntry rv)
         {
-            foreach (var rule in items)
+            foreach (var rule in Items)
             {
                 foreach (var flag in rule)
                 {
@@ -43,7 +43,7 @@ namespace Hunspell.NetCore
                 new MetacharData()
             };
 
-            foreach (var compoundRule in items)
+            foreach (var compoundRule in Items)
             {
                 var pp = 0; // pattern position
                 var wp = 0; // "words" position
@@ -66,8 +66,8 @@ namespace Hunspell.NetCore
                             var wend = compoundRule[pp + 1] == '?' ? wp : wnum;
                             ok2 = true;
                             pp += 2;
-                            btinfo[bt].btpp = pp;
-                            btinfo[bt].btwp = wp;
+                            btinfo[bt].Btpp = pp;
+                            btinfo[bt].Btwp = wp;
 
                             while (wp <= wend)
                             {
@@ -85,9 +85,9 @@ namespace Hunspell.NetCore
                                 ok2 = false;
                             }
 
-                            btinfo[bt].btnum = wp - btinfo[bt].btwp;
+                            btinfo[bt].Btnum = wp - btinfo[bt].Btwp;
 
-                            if (btinfo[bt].btnum > 0)
+                            if (btinfo[bt].Btnum > 0)
                             {
                                 ++bt;
                                 btinfo.Add(new MetacharData());
@@ -152,11 +152,11 @@ namespace Hunspell.NetCore
                         do
                         {
                             ok = true;
-                            btinfo[bt - 1].btnum--;
-                            pp = btinfo[bt - 1].btpp;
-                            wp = btinfo[bt - 1].btwp + btinfo[bt - 1].btnum;
+                            btinfo[bt - 1].Btnum--;
+                            pp = btinfo[bt - 1].Btpp;
+                            wp = btinfo[bt - 1].Btwp + btinfo[bt - 1].Btnum;
                         }
-                        while ((btinfo[bt - 1].btnum < 0) && (--bt != 0));
+                        while ((btinfo[bt - 1].Btnum < 0) && (--bt != 0));
                     }
 
                 }
@@ -215,15 +215,15 @@ namespace Hunspell.NetCore
             /// <summary>
             /// Metacharacter (*, ?) position for backtracking.
             /// </summary>
-            public int btpp;
+            public int Btpp;
             /// <summary>
             /// Word position for metacharacters.
             /// </summary>
-            public int btwp;
+            public int Btwp;
             /// <summary>
             /// Number of matched characters in metacharacter.
             /// </summary>
-            public int btnum;
+            public int Btnum;
         }
     }
 }

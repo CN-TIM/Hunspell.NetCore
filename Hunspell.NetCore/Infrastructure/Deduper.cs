@@ -6,21 +6,21 @@ namespace Hunspell.NetCore.Infrastructure
     {
         public Deduper(IEqualityComparer<T> comparer)
         {
-            lookup = new Dictionary<T, T>(comparer);
+            _lookup = new Dictionary<T, T>(comparer);
         }
 
-        private readonly Dictionary<T, T> lookup;
+        private readonly Dictionary<T, T> _lookup;
 
         public T GetEqualOrAdd(T item)
         {
             T existing;
-            if (lookup.TryGetValue(item, out existing))
+            if (_lookup.TryGetValue(item, out existing))
             {
                 return existing;
             }
             else
             {
-                lookup[item] = item;
+                _lookup[item] = item;
                 return item;
             }
         }
@@ -28,9 +28,9 @@ namespace Hunspell.NetCore.Infrastructure
         public void Add(T item)
         {
             T existing;
-            if (!lookup.TryGetValue(item, out existing))
+            if (!_lookup.TryGetValue(item, out existing))
             {
-                lookup[item] = item;
+                _lookup[item] = item;
             }
         }
     }

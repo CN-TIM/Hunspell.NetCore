@@ -37,7 +37,7 @@ namespace Hunspell.NetCore
 
         internal static FlagSet Union(FlagSet set, FlagValue value)
         {
-            var valueIndex = Array.BinarySearch(set.items, value);
+            var valueIndex = Array.BinarySearch(set.Items, value);
             if (valueIndex >= 0)
             {
                 return set;
@@ -45,16 +45,16 @@ namespace Hunspell.NetCore
 
             valueIndex = ~valueIndex; // locate the best insertion point
 
-            var newItems = new FlagValue[set.items.Length + 1];
-            if (valueIndex >= set.items.Length)
+            var newItems = new FlagValue[set.Items.Length + 1];
+            if (valueIndex >= set.Items.Length)
             {
-                Array.Copy(set.items, newItems, set.items.Length);
-                newItems[set.items.Length] = value;
+                Array.Copy(set.Items, newItems, set.Items.Length);
+                newItems[set.Items.Length] = value;
             }
             else
             {
-                Array.Copy(set.items, newItems, valueIndex);
-                Array.Copy(set.items, valueIndex, newItems, valueIndex + 1, set.items.Length - valueIndex);
+                Array.Copy(set.Items, newItems, valueIndex);
+                Array.Copy(set.Items, valueIndex, newItems, valueIndex + 1, set.Items.Length - valueIndex);
                 newItems[valueIndex] = value;
             }
 
@@ -92,7 +92,7 @@ namespace Hunspell.NetCore
             return false;
         }
 
-        public bool Contains(FlagValue value) => value.HasValue && items.Length > 0 && value >= items[0] && value <= items[items.Length -1] && Array.BinarySearch(items, value) >= 0;
+        public bool Contains(FlagValue value) => value.HasValue && Items.Length > 0 && value >= Items[0] && value <= Items[Items.Length -1] && Array.BinarySearch(Items, value) >= 0;
 
         public bool ContainsAny(FlagSet values) => ContainsAny(this, values);
 

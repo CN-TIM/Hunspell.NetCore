@@ -16,19 +16,19 @@ namespace Hunspell.NetCore
         {
             if (type == ReplacementValueType.Med)
             {
-                med = value;
+                _med = value;
             }
             else if (type == ReplacementValueType.Ini)
             {
-                ini = value;
+                _ini = value;
             }
             else if (type == ReplacementValueType.Fin)
             {
-                fin = value;
+                _fin = value;
             }
             else if (type == ReplacementValueType.Isol)
             {
-                isol = value;
+                _isol = value;
             }
             else
             {
@@ -36,18 +36,18 @@ namespace Hunspell.NetCore
             }
         }
 
-        private string med;
-        private string ini;
-        private string fin;
-        private string isol;
+        private string _med;
+        private string _ini;
+        private string _fin;
+        private string _isol;
 
-        public override string Med => med;
+        public override string Med => _med;
 
-        public override string Ini => ini;
+        public override string Ini => _ini;
 
-        public override string Fin => fin;
+        public override string Fin => _fin;
 
-        public override string Isol => isol;
+        public override string Isol => _isol;
 
         public override string this[ReplacementValueType type]
         {
@@ -55,19 +55,19 @@ namespace Hunspell.NetCore
             {
                 if (type == ReplacementValueType.Med)
                 {
-                    return med;
+                    return _med;
                 }
                 if (type == ReplacementValueType.Ini)
                 {
-                    return ini;
+                    return _ini;
                 }
                 if (type == ReplacementValueType.Fin)
                 {
-                    return fin;
+                    return _fin;
                 }
                 if (type == ReplacementValueType.Isol)
                 {
-                    return isol;
+                    return _isol;
                 }
 
                 throw new ArgumentOutOfRangeException(nameof(type));
@@ -80,31 +80,31 @@ namespace Hunspell.NetCore
 
             if (type == ReplacementValueType.Med)
             {
-                result.med = value;
-                result.ini = ini;
-                result.fin = fin;
-                result.isol = isol;
+                result._med = value;
+                result._ini = _ini;
+                result._fin = _fin;
+                result._isol = _isol;
             }
             else if (type == ReplacementValueType.Ini)
             {
-                result.med = med;
-                result.ini = value;
-                result.fin = fin;
-                result.isol = isol;
+                result._med = _med;
+                result._ini = value;
+                result._fin = _fin;
+                result._isol = _isol;
             }
             else if (type == ReplacementValueType.Fin)
             {
-                result.med = med;
-                result.ini = ini;
-                result.fin = value;
-                result.isol = isol;
+                result._med = _med;
+                result._ini = _ini;
+                result._fin = value;
+                result._isol = _isol;
             }
             else if (type == ReplacementValueType.Isol)
             {
-                result.med = med;
-                result.ini = ini;
-                result.fin = fin;
-                result.isol = value;
+                result._med = _med;
+                result._ini = _ini;
+                result._fin = _fin;
+                result._isol = value;
             }
             else
             {

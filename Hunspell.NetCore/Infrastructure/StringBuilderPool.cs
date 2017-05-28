@@ -5,16 +5,16 @@ namespace Hunspell.NetCore.Infrastructure
 {
     internal static class StringBuilderPool
     {
-        private const int MaxCachedBuilderCapacity = HunspellDictionary.MaxWordLen;
+        private const int _maxCachedBuilderCapacity = HunspellDictionary.MaxWordLen;
 
         [ThreadStatic]
-        private static StringBuilder PrimaryCache;
+        private static StringBuilder _primaryCache;
 
         [ThreadStatic]
-        private static StringBuilder SecondaryCache;
+        private static StringBuilder _secondaryCache;
 
         [ThreadStatic]
-        private static StringBuilder TertiaryCache;
+        private static StringBuilder _tertiaryCache;
 
         public static StringBuilder Get() => GetClearedBuilder();
 
@@ -38,19 +38,19 @@ namespace Hunspell.NetCore.Infrastructure
 
         public static void Return(StringBuilder builder)
         {
-            if (builder != null && builder.Capacity <= MaxCachedBuilderCapacity)
+            if (builder != null && builder.Capacity <= _maxCachedBuilderCapacity)
             {
-                if (PrimaryCache == null)
+                if (_primaryCache == null)
                 {
-                    PrimaryCache = builder;
+                    _primaryCache = builder;
                 }
-                else if (SecondaryCache == null)
+                else if (_secondaryCache == null)
                 {
-                    SecondaryCache = builder;
+                    _secondaryCache = builder;
                 }
                 else
                 {
-                    TertiaryCache = builder;
+                    _tertiaryCache = builder;
                 }
             }
         }
@@ -64,13 +64,13 @@ namespace Hunspell.NetCore.Infrastructure
 
         private static StringBuilder GetClearedBuilder()
         {
-            var result = Steal(ref PrimaryCache);
+            var result = Steal(ref _primaryCache);
             if (result == null)
             {
-                result = Steal(ref SecondaryCache);
+                result = Steal(ref _secondaryCache);
                 if (result == null)
                 {
-                    result = Steal(ref TertiaryCache);
+                    result = Steal(ref _tertiaryCache);
                     if (result == null)
                     {
                         return new StringBuilder();
@@ -83,35 +83,35 @@ namespace Hunspell.NetCore.Infrastructure
 
         private static StringBuilder GetClearedBuilderWithCapacity(int capacity)
         {
-            if (capacity > MaxCachedBuilderCapacity)
+            if (capacity > _maxCachedBuilderCapacity)
             {
                 return new StringBuilder(capacity);
             }
 
-            var result = PrimaryCache;
+            var result = _primaryCache;
             if (result == null || result.Capacity < capacity)
             {
-                result = SecondaryCache;
+                result = _secondaryCache;
                 if (result == null || result.Capacity < capacity)
                 {
-                    result = TertiaryCache;
+                    result = _tertiaryCache;
                     if (result == null || result.Capacity < capacity)
                     {
                         return new StringBuilder(capacity);
                     }
                     else
                     {
-                        TertiaryCache = null;
+                        _tertiaryCache = null;
                     }
                 }
                 else
                 {
-                    SecondaryCache = null;
+                    _secondaryCache = null;
                 }
             }
             else
             {
-                PrimaryCache = null;
+                _primaryCache = null;
             }
 
             return result.Clear();

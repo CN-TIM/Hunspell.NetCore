@@ -23,14 +23,14 @@ namespace Hunspell.NetCore
                 throw new ArgumentNullException(nameof(encoding));
             }
 
-            this.stream = stream;
-            reader = new StreamReader(stream, encoding, true);
+            this._stream = stream;
+            _reader = new StreamReader(stream, encoding, true);
         }
 
-        private readonly Stream stream;
-        private readonly StreamReader reader;
+        private readonly Stream _stream;
+        private readonly StreamReader _reader;
 
-        public Encoding CurrentEncoding => reader.CurrentEncoding;
+        public Encoding CurrentEncoding => _reader.CurrentEncoding;
 
 #if !NO_IO_FILE
         public static List<string> ReadLines(string filePath, Encoding defaultEncoding)
@@ -57,7 +57,7 @@ namespace Hunspell.NetCore
 
         public string ReadLine()
         {
-            return reader.ReadLine();
+            return _reader.ReadLine();
         }
 
 #if !NO_ASYNC
@@ -69,8 +69,8 @@ namespace Hunspell.NetCore
 
         public void Dispose()
         {
-            reader.Dispose();
-            stream.Dispose();
+            _reader.Dispose();
+            _stream.Dispose();
         }
     }
 }

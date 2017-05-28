@@ -31,6 +31,6 @@ namespace Hunspell.NetCore
 
         public static CharacterSet Create(char value) => TakeArray(new[] { value });
 
-        public bool Contains(char value) => Array.BinarySearch(items, value) >= 0;
+        public bool Contains(char value) => Array.BinarySearch(Items, value) >= 0;
     }
 }

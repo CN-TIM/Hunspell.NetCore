@@ -13,29 +13,29 @@ namespace Hunspell.NetCore
         IComparable<int>,
         IComparable<char>
     {
-        private char value;
+        private char _value;
 
         public FlagValue(char value)
         {
-            this.value = value;
+            this._value = value;
         }
 
         public FlagValue(int value)
         {
-            this.value = checked((char)value);
+            this._value = checked((char)value);
         }
 
-        public bool HasValue => value != 0;
+        public bool HasValue => _value != 0;
 
-        public bool IsZero => value == 0;
+        public bool IsZero => _value == 0;
 
         public static FlagValue Create(char high, char low) => new FlagValue(unchecked((char)((high << 8) | low)));
 
-        public bool Equals(FlagValue other) => other.value == value;
+        public bool Equals(FlagValue other) => other._value == _value;
 
-        public bool Equals(int other) => other == value;
+        public bool Equals(int other) => other == _value;
 
-        public bool Equals(char other) => other == value;
+        public bool Equals(char other) => other == _value;
 
         public override bool Equals(object obj)
         {
@@ -55,15 +55,15 @@ namespace Hunspell.NetCore
             return false;
         }
 
-        public override int GetHashCode() => value.GetHashCode();
+        public override int GetHashCode() => _value.GetHashCode();
 
-        public int CompareTo(FlagValue other) => value.CompareTo(other.value);
+        public int CompareTo(FlagValue other) => _value.CompareTo(other._value);
 
-        public int CompareTo(int other) => ((int)value).CompareTo(other);
+        public int CompareTo(int other) => ((int)_value).CompareTo(other);
 
-        public int CompareTo(char other) => value.CompareTo(other);
+        public int CompareTo(char other) => _value.CompareTo(other);
 
-        public override string ToString() => ((int)value).ToString(CultureInfo.InvariantCulture);
+        public override string ToString() => ((int)_value).ToString(CultureInfo.InvariantCulture);
 
         public static bool TryParseFlag(string text, FlagMode mode, out FlagValue value)
         {
@@ -368,20 +368,20 @@ namespace Hunspell.NetCore
             return flags;
         }
 
-        public static implicit operator int(FlagValue flag) => flag.value;
+        public static implicit operator int(FlagValue flag) => flag._value;
 
-        public static implicit operator char(FlagValue flag) => flag.value;
+        public static implicit operator char(FlagValue flag) => flag._value;
 
-        public static bool operator !=(FlagValue a, FlagValue b) => a.value != b.value;
+        public static bool operator !=(FlagValue a, FlagValue b) => a._value != b._value;
 
-        public static bool operator ==(FlagValue a, FlagValue b) => a.value == b.value;
+        public static bool operator ==(FlagValue a, FlagValue b) => a._value == b._value;
 
-        public static bool operator >=(FlagValue a, FlagValue b) => a.value >= b.value;
+        public static bool operator >=(FlagValue a, FlagValue b) => a._value >= b._value;
 
-        public static bool operator <=(FlagValue a, FlagValue b) => a.value <= b.value;
+        public static bool operator <=(FlagValue a, FlagValue b) => a._value <= b._value;
 
-        public static bool operator >(FlagValue a, FlagValue b) => a.value > b.value;
+        public static bool operator >(FlagValue a, FlagValue b) => a._value > b._value;
 
-        public static bool operator <(FlagValue a, FlagValue b) => a.value < b.value;
+        public static bool operator <(FlagValue a, FlagValue b) => a._value < b._value;
     }
 }

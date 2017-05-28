@@ -21,9 +21,9 @@ namespace Hunspell.NetCore
 
         public bool TryGetPattern(int number, out PatternEntry result)
         {
-            if (number > 0 && number <= items.Count)
+            if (number > 0 && number <= Items.Count)
             {
-                result = items[number - 1];
+                result = Items[number - 1];
                 return true;
             }
             else
@@ -40,7 +40,7 @@ namespace Hunspell.NetCore
         {
             var wordAfterPos = word.Substring(pos);
 
-            foreach (var patternEntry in items)
+            foreach (var patternEntry in Items)
             {
                 int len;
                 if (

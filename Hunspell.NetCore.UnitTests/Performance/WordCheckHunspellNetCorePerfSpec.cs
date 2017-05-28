@@ -5,9 +5,9 @@ namespace Hunspell.NetCore.Tests.Performance
 {
     public class WordCheckHunspellNetCorePerfSpec : EnWordPerfBase
     {
-        private Counter WordsChecked;
+        private Counter _wordsChecked;
 
-        private HunspellDictionary Checker;
+        private HunspellDictionary _checker;
 
         [PerfSetup]
         public override void Setup(BenchmarkContext context)
@@ -16,9 +16,9 @@ namespace Hunspell.NetCore.Tests.Performance
 
             var testAssemblyPath = Path.GetFullPath(GetType().Assembly.Location);
             var filesDirectory = Path.Combine(Path.GetDirectoryName(testAssemblyPath), "files/");
-            Checker = HunspellDictionary.FromFileAsync(Path.Combine(filesDirectory, "English (American).dic")).Result;
+            _checker = HunspellDictionary.FromFileAsync(Path.Combine(filesDirectory, "English (American).dic")).Result;
 
-            WordsChecked = context.GetCounter(nameof(WordsChecked));
+            _wordsChecked = context.GetCounter(nameof(_wordsChecked));
         }
 
         [PerfBenchmark(
@@ -29,13 +29,13 @@ namespace Hunspell.NetCore.Tests.Performance
         [MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
         [GcMeasurement(GcMetric.TotalCollections, GcGeneration.AllGc)]
         [TimingMeasurement]
-        [CounterMeasurement(nameof(WordsChecked))]
+        [CounterMeasurement(nameof(_wordsChecked))]
         public void Benchmark(BenchmarkContext context)
         {
             foreach (var word in Words)
             {
-                var result = Checker.Check(word);
-                WordsChecked.Increment();
+                var result = _checker.Check(word);
+                _wordsChecked.Increment();
             }
         }
     }

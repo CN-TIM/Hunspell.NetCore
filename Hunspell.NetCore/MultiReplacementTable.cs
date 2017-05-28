@@ -10,22 +10,22 @@ namespace Hunspell.NetCore
     {
         public static readonly MultiReplacementTable Empty = TakeDictionary(new Dictionary<string, MultiReplacementEntry>(0));
 
-        private Dictionary<string, MultiReplacementEntry> replacements;
+        private Dictionary<string, MultiReplacementEntry> _replacements;
 
         private MultiReplacementTable(Dictionary<string, MultiReplacementEntry> replacements)
         {
-            this.replacements = replacements;
+            this._replacements = replacements;
         }
 
-        public MultiReplacementEntry this[string key] => replacements[key];
+        public MultiReplacementEntry this[string key] => _replacements[key];
 
-        public int Count => replacements.Count;
+        public int Count => _replacements.Count;
 
-        public bool HasReplacements => replacements.Count != 0;
+        public bool HasReplacements => _replacements.Count != 0;
 
-        public IEnumerable<string> Keys => replacements.Keys;
+        public IEnumerable<string> Keys => _replacements.Keys;
 
-        public IEnumerable<MultiReplacementEntry> Values => replacements.Values;
+        public IEnumerable<MultiReplacementEntry> Values => _replacements.Values;
 
         internal static MultiReplacementTable TakeDictionary(Dictionary<string, MultiReplacementEntry> replacements) =>
             replacements == null ? Empty : new MultiReplacementTable(replacements);
@@ -33,9 +33,9 @@ namespace Hunspell.NetCore
         public static MultiReplacementTable Create(IEnumerable<KeyValuePair<string, MultiReplacementEntry>> replacements) =>
             replacements == null ? Empty : TakeDictionary(replacements.ToDictionary(s => s.Key, s => s.Value));
 
-        public bool ContainsKey(string key) => replacements.ContainsKey(key);
+        public bool ContainsKey(string key) => _replacements.ContainsKey(key);
 
-        public bool TryGetValue(string key, out MultiReplacementEntry value) => replacements.TryGetValue(key, out value);
+        public bool TryGetValue(string key, out MultiReplacementEntry value) => _replacements.TryGetValue(key, out value);
 
         public bool TryConvert(string text, out string converted)
         {
@@ -77,7 +77,7 @@ namespace Hunspell.NetCore
             for (var searchLength = text.Length; searchLength > 0; searchLength--)
             {
                 MultiReplacementEntry entry = null;
-                if (replacements.TryGetValue(text.Substring(0, searchLength), out entry))
+                if (_replacements.TryGetValue(text.Substring(0, searchLength), out entry))
                 {
                     return entry;
                 }
@@ -97,7 +97,7 @@ namespace Hunspell.NetCore
             for (var searchLength = text.Length; searchLength > 0; searchLength--)
             {
                 MultiReplacementEntry entry = null;
-                if (replacements.TryGetValue(text.Substring(0, searchLength), out entry))
+                if (_replacements.TryGetValue(text.Substring(0, searchLength), out entry))
                 {
                     return entry;
                 }
@@ -106,8 +106,8 @@ namespace Hunspell.NetCore
             return null;
         }
 
-        public IEnumerator<KeyValuePair<string, MultiReplacementEntry>> GetEnumerator() => replacements.GetEnumerator();
+        public IEnumerator<KeyValuePair<string, MultiReplacementEntry>> GetEnumerator() => _replacements.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => replacements.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _replacements.GetEnumerator();
     }
 }

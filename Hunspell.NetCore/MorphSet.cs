@@ -21,13 +21,13 @@ namespace Hunspell.NetCore
 
         public static MorphSet Create(IEnumerable<string> morphs) => morphs == null ? Empty : TakeArray(morphs.ToArray());
 
-        public string Join(string seperator) => string.Join(seperator, items);
+        public string Join(string seperator) => string.Join(seperator, Items);
 
         public bool AnyStartsWith(string text)
         {
-            for (var i = 0; i < items.Length; i++)
+            for (var i = 0; i < Items.Length; i++)
             {
-                if (items[i].StartsWith(text))
+                if (Items[i].StartsWith(text))
                 {
                     return true;
                 }
