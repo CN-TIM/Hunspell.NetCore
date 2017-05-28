@@ -3,48 +3,49 @@ using NBench;
 
 namespace Hunspell.NetCore.Tests.Performance
 {
-    public class WordCheckNHunspellPerfSpec : EnWordPerfBase
-    {
-        private Counter WordsChecked;
+    //ToDo: With a real C# implementation, we shouldn't rely on linking against and interacting with NHunspell libraries for perf measurement
+    //public class WordCheckNHunspellPerfSpec : EnWordPerfBase
+    //{
+    //    private Counter WordsChecked;
 
-        private NHunspell.Hunspell Checker;
+    //    private NHunspell.Hunspell Checker;
 
-        [PerfSetup]
-        public override void Setup(BenchmarkContext context)
-        {
-            base.Setup(context);
+    //    [PerfSetup]
+    //    public override void Setup(BenchmarkContext context)
+    //    {
+    //        base.Setup(context);
 
-            var testAssemblyPath = Path.GetFullPath(GetType().Assembly.Location);
-            var filesDirectory = Path.Combine(Path.GetDirectoryName(testAssemblyPath), "files/");
-            var dictionaryFilePath = Path.Combine(filesDirectory, "English (American).dic");
-            var affixFilePath = Path.ChangeExtension(dictionaryFilePath, "aff");
-            Checker = new NHunspell.Hunspell(affixFilePath, dictionaryFilePath);
+    //        var testAssemblyPath = Path.GetFullPath(GetType().Assembly.Location);
+    //        var filesDirectory = Path.Combine(Path.GetDirectoryName(testAssemblyPath), "files/");
+    //        var dictionaryFilePath = Path.Combine(filesDirectory, "English (American).dic");
+    //        var affixFilePath = Path.ChangeExtension(dictionaryFilePath, "aff");
+    //        Checker = new NHunspell.Hunspell(affixFilePath, dictionaryFilePath);
 
-            WordsChecked = context.GetCounter(nameof(WordsChecked));
-        }
+    //        WordsChecked = context.GetCounter(nameof(WordsChecked));
+    //    }
 
-        [PerfCleanup]
-        public void Cleanup()
-        {
-            Checker?.Dispose();
-        }
+    //    [PerfCleanup]
+    //    public void Cleanup()
+    //    {
+    //        Checker?.Dispose();
+    //    }
 
-        [PerfBenchmark(
-            Description = "How fast can NHunspell check English (US) words?",
-            NumberOfIterations = 3,
-            RunMode = RunMode.Throughput,
-            TestMode = TestMode.Measurement)]
-        [MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
-        [GcMeasurement(GcMetric.TotalCollections, GcGeneration.AllGc)]
-        [TimingMeasurement]
-        [CounterMeasurement(nameof(WordsChecked))]
-        public void Benchmark(BenchmarkContext context)
-        {
-            foreach (var word in Words)
-            {
-                var result = Checker.Spell(word);
-                WordsChecked.Increment();
-            }
-        }
-    }
+    //    [PerfBenchmark(
+    //        Description = "How fast can NHunspell check English (US) words?",
+    //        NumberOfIterations = 3,
+    //        RunMode = RunMode.Throughput,
+    //        TestMode = TestMode.Measurement)]
+    //    [MemoryMeasurement(MemoryMetric.TotalBytesAllocated)]
+    //    [GcMeasurement(GcMetric.TotalCollections, GcGeneration.AllGc)]
+    //    [TimingMeasurement]
+    //    [CounterMeasurement(nameof(WordsChecked))]
+    //    public void Benchmark(BenchmarkContext context)
+    //    {
+    //        foreach (var word in Words)
+    //        {
+    //            var result = Checker.Spell(word);
+    //            WordsChecked.Increment();
+    //        }
+    //    }
+    //}
 }
