@@ -60,7 +60,7 @@ namespace Hunspell.NetCore
             {"UTF-8", FlagMode.Uni}
         };
 
-        private static readonly string[] _defaultBreakTableEntries = new[] { "-", "^-", "-$" };
+        private static readonly string[] _defaultBreakTableEntries = { "-", "^-", "-$" };
 
         private static readonly CharacterSet _defaultCompoundVowels = CharacterSet.TakeArray(new[] { 'A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u' });
 
@@ -650,7 +650,7 @@ namespace Hunspell.NetCore
 
                 return true;
             }
-            else if (lineMatchGroups[4].Success && lineMatchGroups[5].Success && lineMatchGroups[6].Success)
+            if (lineMatchGroups[4].Success && lineMatchGroups[5].Success && lineMatchGroups[6].Success)
             {
                 // piece 3 - is string to strip or 0 for null
                 var strip = lineMatchGroups[4].Value;
@@ -799,11 +799,8 @@ namespace Hunspell.NetCore
 
                 return true;
             }
-            else
-            {
-                Builder.LogWarning("Affix line not fully parsed: " + parameterText);
-                return false;
-            }
+            Builder.LogWarning("Affix line not fully parsed: " + parameterText);
+            return false;
         }
 
         private static string ReverseCondition(string conditionText)
@@ -1116,11 +1113,8 @@ namespace Hunspell.NetCore
                 Builder.FlagMode = mode;
                 return true;
             }
-            else
-            {
-                Builder.LogWarning($"Unknown {nameof(FlagMode)}: {modeText}");
-                return false;
-            }
+            Builder.LogWarning($"Unknown {nameof(FlagMode)}: {modeText}");
+            return false;
         }
 
         private string ReDecodeConvertedStringAsUtf8(string decoded)
