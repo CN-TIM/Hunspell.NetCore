@@ -24,13 +24,6 @@ namespace Hunspell.NetCore.Infrastructure
 
         public override bool Equals(string x, string y) => Compare(x, y) == 0;
 
-        public override int GetHashCode(string obj)
-        {
-#if NETCORE || NET_4_5_1 || PCL
-            return 0;
-#else
-            return CompareInfo.GetHashCode(obj, CompareOptions.None);
-#endif
-        }
+        public override int GetHashCode(string obj) => InvariantCulture.GetHashCode(obj);
     }
 }
