@@ -6,9 +6,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hunspell.NetCore.Infrastructure;
-#if !NO_ASYNC
-
-#endif
 
 namespace Hunspell.NetCore
 {
@@ -61,7 +58,6 @@ namespace Hunspell.NetCore
 
         public Encoding CurrentEncoding => _encoding;
 
-#if !NO_IO_FILE
         public static List<string> ReadLines(string filePath, Encoding defaultEncoding)
         {
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -71,7 +67,6 @@ namespace Hunspell.NetCore
             }
         }
 
-#if !NO_ASYNC
         public static async Task<List<string>> ReadLinesAsync(string filePath, Encoding defaultEncoding)
         {
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -80,9 +75,6 @@ namespace Hunspell.NetCore
                 return await reader.ReadLinesAsync().ConfigureAwait(false);
             }
         }
-#endif
-
-#endif
 
         public string ReadLine()
         {
@@ -109,10 +101,9 @@ namespace Hunspell.NetCore
             return ProcessLine(StringBuilderPool.GetStringAndReturn(builder));
         }
 
-#if !NO_ASYNC
         public async Task<string> ReadLineAsync()
         {
-            if (!hasCheckedForPreamble)
+            if (!_hasCheckedForPreamble)
             {
                 await ReadPreambleAsync().ConfigureAwait(false);
             }
@@ -134,7 +125,6 @@ namespace Hunspell.NetCore
 
             return ProcessLine(StringBuilderPool.GetStringAndReturn(builder));
         }
-#endif
 
         private bool ProcessCharsForLine(char[] readChars, StringBuilder builder)
         {
@@ -203,12 +193,11 @@ namespace Hunspell.NetCore
             return null;
         }
 
-#if !NO_ASYNC
         private async Task<char[]> ReadNextCharsAsync()
         {
-            var maxBytes = encoding.GetMaxByteCount(1);
+            var maxBytes = _encoding.GetMaxByteCount(1);
             var bytesConsumed = 0;
-            var charOutBuffer = new char[encoding.GetMaxCharCount(maxBytes)];
+            var charOutBuffer = new char[_encoding.GetMaxCharCount(maxBytes)];
 
             while (bytesConsumed < maxBytes)
             {
@@ -234,7 +223,6 @@ namespace Hunspell.NetCore
 
             return null;
         }
-#endif
 
         private int TryDecode(byte[] bytes, char[] chars)
         {
@@ -263,13 +251,11 @@ namespace Hunspell.NetCore
             return HandlePreambleBytes(possiblePreambleBytes);
         }
 
-#if !NO_ASYNC
         private async Task<bool> ReadPreambleAsync()
         {
-            var possiblePreambleBytes = await ReadBytesAsync(MaxPreambleBytes).ConfigureAwait(false);
+            var possiblePreambleBytes = await ReadBytesAsync(_maxPreambleBytes).ConfigureAwait(false);
             return HandlePreambleBytes(possiblePreambleBytes);
         }
-#endif
 
         private bool HandlePreambleBytes(byte[] possiblePreambleBytes)
         {
@@ -323,7 +309,6 @@ namespace Hunspell.NetCore
             return result;
         }
 
-#if !NO_ASYNC
         private async Task<byte[]> ReadBytesAsync(int count)
         {
             var result = new byte[count];
@@ -342,7 +327,6 @@ namespace Hunspell.NetCore
 
             return result;
         }
-#endif
 
         private void HandleReadBytesIncrement(byte[] result, ref int bytesNeeded, ref int resultOffset)
         {
@@ -376,20 +360,18 @@ namespace Hunspell.NetCore
             return HandlePrepareBufferRead(readBytesCount);
         }
 
-#if !NO_ASYNC
         private async Task<bool> PrepareBufferAsync()
         {
-            if (buffer != null && bufferIndex < buffer.Length)
+            if (_buffer != null && _bufferIndex < _buffer.Length)
             {
                 return true;
             }
 
-            buffer = new byte[bufferMaxSize];
-            var readBytesCount = await stream.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
+            _buffer = new byte[_bufferMaxSize];
+            var readBytesCount = await _stream.ReadAsync(_buffer, 0, _buffer.Length).ConfigureAwait(false);
 
             return HandlePrepareBufferRead(readBytesCount);
         }
-#endif
 
         private bool HandlePrepareBufferRead(int readBytesCount)
         {

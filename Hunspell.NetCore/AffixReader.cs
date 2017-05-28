@@ -5,10 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Hunspell.NetCore.Infrastructure;
-#if !NO_ASYNC
-
-#endif
 
 namespace Hunspell.NetCore
 {
@@ -72,8 +70,6 @@ namespace Hunspell.NetCore
 
         private EntryListType Initialized { get; set; } = EntryListType.None;
 
-
-#if !NO_ASYNC
         public static async Task<AffixConfig> ReadAsync(IHunspellLineReader reader, AffixConfig.Builder builder = null)
         {
             var readerInstance = new AffixReader(builder, reader);
@@ -97,7 +93,6 @@ namespace Hunspell.NetCore
             await ReadToEndAsync().ConfigureAwait(false);
             AddDefaultBreakTableIfEmpty();
         }
-#endif
 
         public static AffixConfig Read(IHunspellLineReader reader, AffixConfig.Builder builder = null)
         {
@@ -123,7 +118,6 @@ namespace Hunspell.NetCore
             AddDefaultBreakTableIfEmpty();
         }
 
-#if !NO_ASYNC
         public static async Task<AffixConfig> ReadAsync(Stream stream, AffixConfig.Builder builder = null)
         {
             using (var reader = new DynamicEncodingLineReader(stream, DefaultEncoding))
@@ -131,7 +125,7 @@ namespace Hunspell.NetCore
                 return await ReadAsync(reader, builder).ConfigureAwait(false);
             }
         }
-#if !NO_IO_FILE
+
         public static async Task<AffixConfig> ReadFileAsync(string filePath, AffixConfig.Builder builder = null)
         {
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -139,8 +133,6 @@ namespace Hunspell.NetCore
                 return await ReadAsync(stream, builder).ConfigureAwait(false);
             }
         }
-#endif
-#endif
 
         public static AffixConfig Read(Stream stream, AffixConfig.Builder builder = null)
         {
@@ -150,7 +142,6 @@ namespace Hunspell.NetCore
             }
         }
 
-#if !NO_IO_FILE
         public static AffixConfig ReadFile(string filePath, AffixConfig.Builder builder = null)
         {
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -158,7 +149,6 @@ namespace Hunspell.NetCore
                 return Read(stream, builder);
             }
         }
-#endif
 
         private bool ParseLine(string line)
         {

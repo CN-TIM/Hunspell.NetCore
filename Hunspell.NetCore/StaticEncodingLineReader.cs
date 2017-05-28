@@ -4,9 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-#if !NO_ASYNC
-
-#endif
 
 namespace Hunspell.NetCore
 {
@@ -32,7 +29,6 @@ namespace Hunspell.NetCore
 
         public Encoding CurrentEncoding => _reader.CurrentEncoding;
 
-#if !NO_IO_FILE
         public static List<string> ReadLines(string filePath, Encoding defaultEncoding)
         {
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -42,7 +38,6 @@ namespace Hunspell.NetCore
             }
         }
 
-#if !NO_ASYNC
         public static async Task<List<string>> ReadLinesAsync(string filePath, Encoding defaultEncoding)
         {
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -51,21 +46,16 @@ namespace Hunspell.NetCore
                 return await reader.ReadLinesAsync().ConfigureAwait(false);
             }
         }
-#endif
-
-#endif
 
         public string ReadLine()
         {
             return _reader.ReadLine();
         }
 
-#if !NO_ASYNC
         public Task<string> ReadLineAsync()
         {
-            return reader.ReadLineAsync();
+            return _reader.ReadLineAsync();
         }
-#endif
 
         public void Dispose()
         {

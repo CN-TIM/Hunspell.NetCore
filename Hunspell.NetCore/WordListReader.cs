@@ -5,9 +5,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hunspell.NetCore.Infrastructure;
-#if !NO_ASYNC
-
-#endif
 
 namespace Hunspell.NetCore
 {
@@ -28,7 +25,6 @@ namespace Hunspell.NetCore
 
         private bool _hasInitialized;
 
-#if !NO_ASYNC
         public static async Task<WordList> ReadAsync(Stream dictionaryStream, Stream affixStream)
         {
             var affixBuilder = new AffixConfig.Builder();
@@ -50,7 +46,6 @@ namespace Hunspell.NetCore
             return readerInstance.Builder.MoveToImmutable();
         }
 
-#if !NO_IO_FILE
         public static async Task<WordList> ReadFileAsync(string dictionaryFilePath)
         {
             var affixFilePath = FindAffixFilePath(dictionaryFilePath);
@@ -64,7 +59,6 @@ namespace Hunspell.NetCore
             var wordListBuilder = new WordList.Builder(affix, affixBuilder.FlagSetDeduper, affixBuilder.MorphSetDeduper, affixBuilder.StringDeduper);
             return await ReadFileAsync(dictionaryFilePath, affix, wordListBuilder).ConfigureAwait(false);
         }
-#endif
 
         public static async Task<WordList> ReadAsync(Stream dictionaryStream, AffixConfig affix, WordList.Builder builder = null)
         {
@@ -74,7 +68,6 @@ namespace Hunspell.NetCore
             }
         }
 
-#if !NO_IO_FILE
         public static async Task<WordList> ReadFileAsync(string dictionaryFilePath, AffixConfig affix, WordList.Builder builder = null)
         {
             using (var stream = File.Open(dictionaryFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -82,9 +75,6 @@ namespace Hunspell.NetCore
                 return await ReadAsync(stream, affix, builder).ConfigureAwait(false);
             }
         }
-#endif
-
-#endif
 
         public static WordList Read(Stream dictionaryStream, Stream affixStream)
         {
@@ -107,7 +97,6 @@ namespace Hunspell.NetCore
             return readerInstance.Builder.MoveToImmutable();
         }
 
-#if !NO_IO_FILE
         public static WordList ReadFile(string dictionaryFilePath)
         {
             var affixFilePath = FindAffixFilePath(dictionaryFilePath);
