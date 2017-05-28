@@ -1,4 +1,6 @@
-﻿namespace Hunspell.NetCore
+﻿using Hunspell.NetCore.Infrastructure;
+
+namespace Hunspell.NetCore
 {
     public sealed class SuffixEntry : AffixEntry
     {

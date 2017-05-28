@@ -21,11 +21,7 @@ namespace Hunspell.NetCore
             Reader = reader;
         }
 
-        private const RegexOptions DefaultRegexOptions =
-#if !NO_COMPILED_REGEX
-            RegexOptions.Compiled |
-#endif
-            RegexOptions.CultureInvariant;
+        private const RegexOptions DefaultRegexOptions = RegexOptions.CultureInvariant;
 
         private static readonly Regex LineStringParseRegex = new Regex(@"^[ \t]*(\w+)[ \t]+(.+)[ \t]*$", DefaultRegexOptions);
 

@@ -98,6 +98,7 @@ namespace Hunspell.NetCore.Infrastructure
 
         public static string Reverse(this string @this)
         {
+            // ToDo: This needs to be replaced with a Reverse function that understands grapheme clusters: https://stackoverflow.com/a/15111719/689185
             if (@this == null || @this.Length <= 1)
             {
                 return @this;

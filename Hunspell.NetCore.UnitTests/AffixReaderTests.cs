@@ -1660,15 +1660,19 @@ namespace Hunspell.NetCore.Tests
                 actual.Suffixes.Last().Entries[1].MorphCode.Should().OnlyContain(x => x == "<DERIV>");
             }
 
-            public static IEnumerable<object[]> can_read_file_without_exception_args =>
-                Array.ConvertAll(Directory.GetFiles("files/", "*.aff"), filePath => new object[] { filePath });
+            public static IEnumerable<string> CanReadFileWithoutExceptionArgs
+            {
+                get => Directory.EnumerateFiles("files/", "*.aff", SearchOption.TopDirectoryOnly)
+                    .Select(f => f)
+                    .ToList();
+            }
 
             public static string[] can_read_file_without_exception_warning_exceptions = new[]
             {
                 "base_utf.aff" // this file has some strange morph lines at the bottom, maybe a bug?
             };
 
-            [Theory, MemberData(nameof(can_read_file_without_exception_args))]
+            [Theory, MemberData(nameof(CanReadFileWithoutExceptionArgs))]
             public async Task can_read_file_without_exception(string filePath)
             {
                 var actual = await AffixReader.ReadFileAsync(filePath);

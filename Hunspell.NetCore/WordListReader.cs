@@ -19,12 +19,8 @@ namespace Hunspell.NetCore
             Affix = affix;
         }
 
-        private static readonly Regex InitialLineRegex = new Regex(
-            @"^\s*(\d+)\s*(?:[#].*)?$",
-#if !NO_COMPILED_REGEX
-            RegexOptions.Compiled |
-#endif
-            RegexOptions.CultureInvariant);
+        private static readonly Regex InitialLineRegex = new Regex(@"^\s*(\d+)\s*(?:[#].*)?$",
+            RegexOptions.CultureInvariant);    // RegexOptions.Compiled doesn't exist in netstandard1.1
 
         private WordList.Builder Builder { get; }
 
@@ -131,7 +127,8 @@ namespace Hunspell.NetCore
             var directoryName = Path.GetDirectoryName(dictionaryFilePath);
             if (!string.IsNullOrEmpty(directoryName))
             {
-                var locatedAffFile = Directory.GetFiles(directoryName, Path.GetFileNameWithoutExtension(dictionaryFilePath) + ".*", SearchOption.TopDirectoryOnly)
+                var locatedAffFile =
+                    Directory.EnumerateFiles(directoryName, Path.GetFileNameWithoutExtension(dictionaryFilePath) + ".*", SearchOption.TopDirectoryOnly)
                     .FirstOrDefault(affFilePath => ".AFF".Equals(Path.GetExtension(affFilePath), System.StringComparison.OrdinalIgnoreCase));
 
                 if (locatedAffFile != null)
@@ -419,12 +416,8 @@ namespace Hunspell.NetCore
             public string Flags;
             public string[] Morphs;
 
-            private static readonly Regex MorphPartRegex = new Regex(
-                @"\G([\t ]+(?<morphs>[^\t ]+))*[\t ]*$",
-#if !NO_COMPILED_REGEX
-                RegexOptions.Compiled |
-#endif
-                RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture);
+            private static readonly Regex MorphPartRegex = new Regex(@"\G([\t ]+(?<morphs>[^\t ]+))*[\t ]*$",
+                RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture);    // RegexOptions.Compiled doesn't exist in netstandard1.1
 
             public static ParsedWordLine Parse(string line)
             {

@@ -9,11 +9,7 @@ namespace Hunspell.NetCore
         IEquatable<CharacterCondition>
     {
         private static Regex ConditionParsingRegex = new Regex(
-            @"^(\[[^\]]*\]|\.|[^\[\]\.])*$",
-#if !NO_COMPILED_REGEX
-            RegexOptions.Compiled |
-#endif
-            RegexOptions.CultureInvariant);
+            @"^(\[[^\]]*\]|\.|[^\[\]\.])*$", RegexOptions.CultureInvariant);    // RegexOptions.Compiled doesn't exist in netstandard1.1
 
         public static readonly CharacterCondition AllowAny = new CharacterCondition(CharacterSet.Empty, true);
 
@@ -87,7 +83,7 @@ namespace Hunspell.NetCore
                 return Create(singleChar, false);
             }
 
-            if (!text.StartsWith('[') || !text.EndsWith(']'))
+            if (!text.StartsWith("[") || !text.EndsWith("]"))
             {
                 throw new InvalidOperationException();
             }
