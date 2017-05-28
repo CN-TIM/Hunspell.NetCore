@@ -21,14 +21,7 @@ namespace Hunspell.NetCore
                 {
                     new UnicodeEncoding(true, true)
                     ,new UnicodeEncoding(false, true)
-#if !NO_UTF32
-                    ,new UTF32Encoding(false, true)
-#endif
                     ,Encoding.UTF8
-
-#if !NO_UTF32
-                    ,new UTF32Encoding(true, true)
-#endif
                 };
 
             MaxPreambleBytes = PreambleEncodings.Max(e => e.GetPreamble().Length);
