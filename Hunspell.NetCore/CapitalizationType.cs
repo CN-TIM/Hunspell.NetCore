@@ -105,9 +105,6 @@ namespace Hunspell.NetCore
             }
         }
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         private static bool CharIsNeutral(char c, AffixConfig affix) =>
             !char.IsLower(c) || (c > 127 && affix.Culture.TextInfo.ToUpper(c) == c);
     }

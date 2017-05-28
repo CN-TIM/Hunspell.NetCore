@@ -25,43 +25,16 @@ namespace Hunspell.NetCore
             this.value = checked((char)value);
         }
 
-        public bool HasValue
-        {
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-            get
-            {
-                return value != 0;
-            }
-        }
+        public bool HasValue => value != 0;
 
-        public bool IsZero
-        {
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-            get
-            {
-                return value == 0;
-            }
-        }
+        public bool IsZero => value == 0;
 
         public static FlagValue Create(char high, char low) => new FlagValue(unchecked((char)((high << 8) | low)));
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public bool Equals(FlagValue other) => other.value == value;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public bool Equals(int other) => other == value;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public bool Equals(char other) => other == value;
 
         public override bool Equals(object obj)
@@ -395,44 +368,20 @@ namespace Hunspell.NetCore
             return flags;
         }
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static implicit operator int(FlagValue flag) => flag.value;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static implicit operator char(FlagValue flag) => flag.value;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool operator !=(FlagValue a, FlagValue b) => a.value != b.value;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool operator ==(FlagValue a, FlagValue b) => a.value == b.value;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool operator >=(FlagValue a, FlagValue b) => a.value >= b.value;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool operator <=(FlagValue a, FlagValue b) => a.value <= b.value;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool operator >(FlagValue a, FlagValue b) => a.value > b.value;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool operator <(FlagValue a, FlagValue b) => a.value < b.value;
     }
 }

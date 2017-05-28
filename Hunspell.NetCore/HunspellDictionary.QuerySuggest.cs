@@ -2043,9 +2043,6 @@ namespace Hunspell.NetCore
                     : string.Empty;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private bool CopyField(ref string dest, MorphSet morphs, string var) => CopyField(ref dest, morphs.Join(" "), var);
 
             private bool CopyField(ref string dest, string morph, string var)
@@ -2079,9 +2076,6 @@ namespace Hunspell.NetCore
                 return true;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private string MyStrDup(string s) => s;
 
             /// <summary>
@@ -2109,9 +2103,6 @@ namespace Hunspell.NetCore
                 return index;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.NoInlining)]
-#endif
             private static int LeftCommonSubstringComplex(string s1, string s2) =>
                 (
                     s1.Length != 0
@@ -2538,9 +2529,6 @@ namespace Hunspell.NetCore
                 }
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private static void InsertSuggestion(List<string> slst, string word) => slst.Insert(0, word);
 
             private struct NGramSuggestSearchRoot
@@ -2577,9 +2565,6 @@ namespace Hunspell.NetCore
 
                 public int Score;
 
-#if !PRE_NETSTANDARD && !DEBUG
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
                 public void ClearGuessAndOrig()
                 {
                     Guess = null;

@@ -31,13 +31,7 @@ namespace Hunspell.NetCore
         /// </summary>
         public AffixConfigOptions Options
         {
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-            get
-            {
-                return options;
-            }
+            get => options;
             private set
             {
                 options = value;

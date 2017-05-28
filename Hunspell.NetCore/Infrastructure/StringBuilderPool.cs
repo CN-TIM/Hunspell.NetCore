@@ -16,9 +16,6 @@ namespace Hunspell.NetCore.Infrastructure
         [ThreadStatic]
         private static StringBuilder TertiaryCache;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static StringBuilder Get() => GetClearedBuilder();
 
         public static StringBuilder Get(string value) =>
@@ -27,15 +24,9 @@ namespace Hunspell.NetCore.Infrastructure
         public static StringBuilder Get(string value, int capacity) =>
             GetClearedBuilderWithCapacity(capacity).Append(value);
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static StringBuilder Get(int capacity) =>
             GetClearedBuilderWithCapacity(capacity);
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static StringBuilder Get(string value, int valueStartIndex, int valueLength) =>
             Get(value, valueStartIndex, valueLength, valueLength);
 
@@ -45,9 +36,6 @@ namespace Hunspell.NetCore.Infrastructure
         internal static StringBuilder Get(StringSlice value) =>
             Get(value.Text, value.Offset, value.Length, value.Length);
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static void Return(StringBuilder builder)
         {
             if (builder != null && builder.Capacity <= MaxCachedBuilderCapacity)
@@ -67,9 +55,6 @@ namespace Hunspell.NetCore.Infrastructure
             }
         }
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static string GetStringAndReturn(StringBuilder builder)
         {
             var value = builder.ToString();

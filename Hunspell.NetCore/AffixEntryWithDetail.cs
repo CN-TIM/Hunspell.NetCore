@@ -26,14 +26,8 @@
 
         public CharacterConditionGroup Conditions => AffixEntry.Conditions;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public bool ContainsContClass(FlagValue value) => AffixEntry.ContainsContClass(value);
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public bool ContainsAnyContClass(FlagValue a, FlagValue b) => AffixEntry.ContainsAnyContClass(a, b);
     }
 }

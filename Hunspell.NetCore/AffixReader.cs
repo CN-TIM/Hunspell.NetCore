@@ -194,14 +194,8 @@ namespace Hunspell.NetCore
             return false;
         }
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         private bool IsInitialized(EntryListType flags) => EnumEx.HasFlag(Initialized, flags);
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         private void SetInitialized(EntryListType flags)
         {
             Initialized |= flags;

@@ -458,17 +458,11 @@ namespace Hunspell.NetCore
             /// Enables the given <paramref name="options"/> bits.
             /// </summary>
             /// <param name="options">Various bit options to enable.</param>
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             public void EnableOptions(AffixConfigOptions options)
             {
                 Options |= options;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private static T Steal<T>(ref T item) where T : class
             {
                 var value = item;

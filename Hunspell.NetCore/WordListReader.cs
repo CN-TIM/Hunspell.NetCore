@@ -514,17 +514,11 @@ namespace Hunspell.NetCore
                 return -1;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private static bool IsDelimiter(char c)
             {
                 return c == ' ' || c == '\t';
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private static bool IsNotDelimiter(char c)
             {
                 return c != ' ' && c != '\t';

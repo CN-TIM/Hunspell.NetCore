@@ -48,9 +48,6 @@ namespace Hunspell.NetCore
             return items.Length != 0 ? items[0] : null;
         }
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         internal void DestructiveReplace(int index, WordEntry entry)
         {
             items[index] = entry;

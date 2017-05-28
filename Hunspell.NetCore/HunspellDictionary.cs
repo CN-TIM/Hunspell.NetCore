@@ -24,16 +24,7 @@ namespace Hunspell.NetCore
 
         public WordList WordList { get; }
 
-        public AffixConfig Affix
-        {
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-            get
-            {
-                return WordList.Affix;
-            }
-        }
+        public AffixConfig Affix => WordList.Affix;
 
         public static HunspellDictionary Read(Stream dictionaryStream, Stream affixStream) =>
             new HunspellDictionary(WordListReader.Read(dictionaryStream, affixStream));

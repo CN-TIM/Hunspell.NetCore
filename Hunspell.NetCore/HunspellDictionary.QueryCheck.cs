@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Hunspell.NetCore.Infrastructure;
 
 namespace Hunspell.NetCore
@@ -380,9 +379,6 @@ namespace Hunspell.NetCore
                 return null;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private bool IsKeepCase(WordEntry rv) => rv.ContainsFlag(Affix.KeepCase);
         }
     }

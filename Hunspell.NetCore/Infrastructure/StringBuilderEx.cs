@@ -12,9 +12,6 @@ namespace Hunspell.NetCore.Infrastructure
         }
 #endif
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static void Swap(this StringBuilder @this, int indexA, int indexB)
         {
 #if DEBUG
@@ -81,9 +78,6 @@ namespace Hunspell.NetCore.Infrastructure
             return -1;
         }
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static char GetCharOrTerminator(this StringBuilder @this, int index) =>
             index<@this.Length? @this[index] : '\0';
 

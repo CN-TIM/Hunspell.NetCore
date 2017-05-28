@@ -65,43 +65,28 @@ namespace Hunspell.NetCore
             /// </summary>
             private string SuffixAppend { get; set; }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private void ClearPrefix()
             {
                 Prefix = null;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private void ClearSuffix()
             {
                 Suffix = null;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private void ClearSuffixAndFlag()
             {
                 ClearSuffix();
                 SuffixFlag = default(FlagValue);
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private void ClearSuffixAppendAndExtra()
             {
                 SuffixAppend = null;
                 SuffixExtra = false;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private void ClearAllAppendAndExtra()
             {
                 PrefixAppend = null;
@@ -109,41 +94,26 @@ namespace Hunspell.NetCore
                 SuffixExtra = false;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private void SetPrefix(AffixEntryWithDetail<PrefixEntry> entry)
             {
                 Prefix = entry;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private void SetSuffix(AffixEntryWithDetail<SuffixEntry> entry)
             {
                 Suffix = entry;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private void SetSuffixFlag(FlagValue flag)
             {
                 SuffixFlag = flag;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private void SetSuffixExtra(bool extra)
             {
                 SuffixExtra = extra;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             private void SetSuffixAppend(string append)
             {
                 SuffixAppend = append;
@@ -179,9 +149,6 @@ namespace Hunspell.NetCore
             /// <summary>
             /// Convert to all little.
             /// </summary>
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             protected string MakeAllSmall(string s) => Affix.Culture.TextInfo.ToLower(s);
 
             protected string MakeInitSmall(string s)
@@ -196,9 +163,6 @@ namespace Hunspell.NetCore
                 return StringBuilderPool.GetStringAndReturn(builder);
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             protected string MakeAllCap(string s) => Affix.Culture.TextInfo.ToUpper(s);
 
             protected WordEntry CheckWord(string w, ref SpellCheckResultType info, out string root)
@@ -1522,14 +1486,8 @@ namespace Hunspell.NetCore
                 return null;
             }
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             protected bool TestCondition(PrefixEntry entry, string word) => entry.Conditions.IsStartingMatch(word);
 
-#if !PRE_NETSTANDARD && !DEBUG
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
             protected bool TestCondition(SuffixEntry entry, string word) => entry.Conditions.IsEndingMatch(word);
 
             protected WordEntry SuffixCheck(string word, AffixEntryOptions sfxOpts, AffixEntryWithDetail<PrefixEntry> pfx, FlagValue cclass, FlagValue needFlag, CompoundOptions inCompound)

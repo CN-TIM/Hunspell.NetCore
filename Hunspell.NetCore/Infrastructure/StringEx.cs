@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hunspell.NetCore.Infrastructure
 {
@@ -7,24 +8,12 @@ namespace Hunspell.NetCore.Infrastructure
     {
         private static readonly char[] SpaceOrTab = new[] { ' ', '\t' };
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool StartsWith(this string @this, char character) => @this.Length != 0 && @this[0] == character;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool EndsWith(this string @this, char character) => @this.Length != 0 && @this[@this.Length - 1] == character;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static string[] SplitOnTabOrSpace(this string @this) => @this.Split(SpaceOrTab, StringSplitOptions.RemoveEmptyEntries);
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool IsNullOrWhiteSpace(string value)
         {
 #if NET_3_5
@@ -121,9 +110,6 @@ namespace Hunspell.NetCore.Infrastructure
             return StringBuilderPool.GetStringAndReturn(builder);
         }
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool Contains(this string @this, char c) => @this.IndexOf(c) >= 0;
 
         public static string Replace(this string @this, int index, int removeCount, string replacement)
@@ -156,9 +142,6 @@ namespace Hunspell.NetCore.Infrastructure
             return string.CompareOrdinal(a, aOffset, b, bOffset, aRemaining) == 0;
         }
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool EqualsOffset(string a, int aOffset, string b, int bOffset, int length) =>
             (
                 aOffset == bOffset
@@ -170,9 +153,6 @@ namespace Hunspell.NetCore.Infrastructure
             ||
             string.CompareOrdinal(a, aOffset, b, bOffset, length) == 0;
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static char GetCharOrTerminator(this string @this, int index) => index < @this.Length ? @this[index] : '\0';
 
         public static bool ContainsSubstringOrdinal(this string @this, string value, int startIndex, int length)
@@ -186,7 +166,7 @@ namespace Hunspell.NetCore.Infrastructure
                     return true;
                 }
 
-                firstCharIndex = firstCharIndex = @this.IndexOf(firstChar, firstCharIndex + 1);
+                firstCharIndex = @this.IndexOf(firstChar, firstCharIndex + 1);
             }
 
             return false;
@@ -357,14 +337,8 @@ namespace Hunspell.NetCore.Infrastructure
             return lastIndex - searchIndex;
         }
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static bool MyIsAlpha(char ch) => ch < 128 || char.IsLetter(ch);
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         internal static StringSlice Subslice(this string text, int offset, int length)
         {
             return new StringSlice
@@ -375,9 +349,6 @@ namespace Hunspell.NetCore.Infrastructure
             };
         }
 
-#if !PRE_NETSTANDARD && !DEBUG
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         internal static StringSlice Subslice(this string text, int offset)
         {
             return new StringSlice
@@ -390,15 +361,7 @@ namespace Hunspell.NetCore.Infrastructure
 
         internal static bool Contains(this List<string> values, StringSlice test)
         {
-            foreach (var value in values)
-            {
-                if (test.Equals(value))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return values.Any(test.Equals);
         }
     }
 }
