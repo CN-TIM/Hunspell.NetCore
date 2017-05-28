@@ -5,11 +5,7 @@ using System.Collections.Generic;
 namespace Hunspell.NetCore.Infrastructure
 {
     public class ArrayWrapper<T> :
-#if NET_3_5
-        IEnumerable<T>
-#else
         IReadOnlyList<T>
-#endif
     {
         internal readonly T[] items;
 

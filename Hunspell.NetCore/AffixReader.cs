@@ -428,28 +428,17 @@ namespace Hunspell.NetCore
             {
                 return new CultureInfo(language);
             }
-#if !NET_3_5
             catch (CultureNotFoundException)
-#else
-            catch (ArgumentException)
-#endif
             {
                 var dashIndex = language.IndexOf('-');
-                if (dashIndex > 0)
-                {
-                    return GetCultureFromLanguage(language.Substring(0, dashIndex));
-                }
-                else
-                {
-                    return CultureInfo.InvariantCulture;
-                }
+                return dashIndex > 0
+                    ? GetCultureFromLanguage(language.Substring(0, dashIndex))
+                    : CultureInfo.InvariantCulture;
             }
-#if !NET_3_5
             catch (ArgumentException)
             {
                 return CultureInfo.InvariantCulture;
             }
-#endif
         }
 
         private bool TryParsePhone(string parameterText, List<PhoneticEntry> entries)

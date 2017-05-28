@@ -4,14 +4,6 @@ namespace Hunspell.NetCore.Infrastructure
 {
     internal static class StringBuilderEx
     {
-#if NET_3_5
-        public static StringBuilder Clear(this StringBuilder @this)
-        {
-            @this.Length = 0;
-            return @this;
-        }
-#endif
-
         public static void Swap(this StringBuilder @this, int indexA, int indexB)
         {
             if (indexA != indexB)

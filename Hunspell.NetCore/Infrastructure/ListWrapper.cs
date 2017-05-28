@@ -5,11 +5,7 @@ using System.Collections.Generic;
 namespace Hunspell.NetCore.Infrastructure
 {
     public class ListWrapper<T> :
-#if NET_3_5
-        IEnumerable<T>
-#else
         IReadOnlyList<T>
-#endif
     {
         protected readonly List<T> items;
 

@@ -6,11 +6,7 @@ using Hunspell.NetCore.Infrastructure;
 namespace Hunspell.NetCore
 {
     public class MultiReplacementTable :
-#if NET_3_5
-        IEnumerable<KeyValuePair<string, MultiReplacementEntry>>
-#else
         IReadOnlyDictionary<string, MultiReplacementEntry>
-#endif
     {
         public static readonly MultiReplacementTable Empty = TakeDictionary(new Dictionary<string, MultiReplacementEntry>(0));
 
