@@ -3,6 +3,7 @@ using System.Globalization;
 
 namespace Hunspell.NetCore.Infrastructure
 {
+    //ToDo: Replace this with the framework's built-in stuff
     internal sealed class CulturedStringComparer : StringComparer
     {
         public CulturedStringComparer(CultureInfo culture)
@@ -24,6 +25,6 @@ namespace Hunspell.NetCore.Infrastructure
 
         public override bool Equals(string x, string y) => Compare(x, y) == 0;
 
-        public override int GetHashCode(string obj) => InvariantCulture.GetHashCode(obj);
+        public override int GetHashCode(string obj) => StringComparer.CurrentCulture.GetHashCode(obj);
     }
 }
