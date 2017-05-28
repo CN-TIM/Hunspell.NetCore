@@ -14,17 +14,6 @@ namespace Hunspell.NetCore.Infrastructure
 
         public static void Swap(this StringBuilder @this, int indexA, int indexB)
         {
-#if DEBUG
-            if (indexA < 0 || indexA > @this.Length)
-            {
-                throw new System.ArgumentOutOfRangeException(nameof(indexA));
-            }
-            if (indexB < 0 || indexB > @this.Length)
-            {
-                throw new System.ArgumentOutOfRangeException(nameof(indexB));
-            }
-#endif
-
             if (indexA != indexB)
             {
                 var temp = @this[indexA];
