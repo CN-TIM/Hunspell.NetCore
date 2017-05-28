@@ -1,7 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Text;
 
-namespace Hunspell.Infrastructure
+namespace Hunspell.NetCore.Infrastructure
 {
     internal static class StringBuilderEx
     {

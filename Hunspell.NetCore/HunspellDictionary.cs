@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
-
-#if !NO_ASYNC
 using System.Threading.Tasks;
+#if !NO_ASYNC
+
 #endif
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public sealed partial class HunspellDictionary
     {

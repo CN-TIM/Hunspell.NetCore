@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Hunspell.Infrastructure
+namespace Hunspell.NetCore.Infrastructure
 {
     internal sealed class SimulatedCString
     {

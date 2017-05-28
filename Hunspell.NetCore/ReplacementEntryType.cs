@@ -1,4 +1,4 @@
-﻿namespace Hunspell
+﻿namespace Hunspell.NetCore
 {
     public enum ReplacementValueType : byte
     {

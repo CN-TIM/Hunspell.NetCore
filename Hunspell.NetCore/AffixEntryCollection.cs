@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Hunspell.Infrastructure;
+using Hunspell.NetCore.Infrastructure;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public sealed class AffixEntryCollection<TEntry> : ArrayWrapper<TEntry>
         where TEntry : AffixEntry

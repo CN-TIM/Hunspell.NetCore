@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Hunspell.Infrastructure
+namespace Hunspell.NetCore.Infrastructure
 {
     internal static class EncodingEx
     {

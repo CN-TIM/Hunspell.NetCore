@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Hunspell.Infrastructure;
+using Hunspell.NetCore.Infrastructure;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public sealed class AffixCollection<TEntry> :
         IEnumerable<AffixEntryGroup<TEntry>>

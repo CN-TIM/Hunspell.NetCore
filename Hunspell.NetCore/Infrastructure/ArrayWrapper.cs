@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
-namespace Hunspell.Infrastructure
+namespace Hunspell.NetCore.Infrastructure
 {
     public class ArrayWrapper<T> :
 #if NET_3_5

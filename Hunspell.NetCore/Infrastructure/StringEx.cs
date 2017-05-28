@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
-namespace Hunspell.Infrastructure
+namespace Hunspell.NetCore.Infrastructure
 {
     internal static class StringEx
     {

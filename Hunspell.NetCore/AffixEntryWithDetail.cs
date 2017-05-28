@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Hunspell
+﻿namespace Hunspell.NetCore
 {
     public sealed class AffixEntryWithDetail<TEntry>
         where TEntry : AffixEntry

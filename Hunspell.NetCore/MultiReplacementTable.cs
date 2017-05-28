@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Hunspell.Infrastructure;
+using Hunspell.NetCore.Infrastructure;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public class MultiReplacementTable :
 #if NET_3_5

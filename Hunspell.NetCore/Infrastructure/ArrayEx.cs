@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Hunspell.Infrastructure
+﻿namespace Hunspell.NetCore.Infrastructure
 {
     internal static class ArrayEx<T>
     {

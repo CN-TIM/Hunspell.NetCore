@@ -1,6 +1,6 @@
 ﻿using NBench;
 
-namespace Hunspell.NetCore.Performance.Comparison
+namespace Hunspell.NetCore.Tests.Performance
 {
     public class FileLoadHunspellNetCorePerfSpec : FileLoadPerfBase
     {

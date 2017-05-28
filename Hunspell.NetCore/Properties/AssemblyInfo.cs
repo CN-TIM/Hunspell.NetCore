@@ -9,4 +9,4 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("A .NET port of Hunspell")]
 [assembly: CLSCompliant(true)]
 
-[assembly: InternalsVisibleTo("Hunspell.NetCore.Tests")]
+[assembly: InternalsVisibleTo("Hunspell.NetCore.UnitTests")]

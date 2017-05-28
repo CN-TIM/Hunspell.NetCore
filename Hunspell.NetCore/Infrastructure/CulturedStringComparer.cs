@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Hunspell.Infrastructure
+namespace Hunspell.NetCore.Infrastructure
 {
     internal sealed class CulturedStringComparer : StringComparer
     {

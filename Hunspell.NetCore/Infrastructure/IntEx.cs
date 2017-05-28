@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Hunspell.Infrastructure
+namespace Hunspell.NetCore.Infrastructure
 {
     internal static class IntEx
     {

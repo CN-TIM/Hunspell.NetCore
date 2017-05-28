@@ -1,7 +1,7 @@
 ﻿using System;
-using Hunspell.Infrastructure;
+using Hunspell.NetCore.Infrastructure;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public sealed class CharacterSet : ArrayWrapper<char>
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hunspell.NetCore.Performance.TestHarness
+namespace Hunspell.NetCore.Tests.Performance
 {
     public class Program
     {

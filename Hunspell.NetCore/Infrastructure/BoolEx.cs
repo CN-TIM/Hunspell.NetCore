@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Hunspell.Infrastructure
+﻿namespace Hunspell.NetCore.Infrastructure
 {
     internal static class BoolEx
     {

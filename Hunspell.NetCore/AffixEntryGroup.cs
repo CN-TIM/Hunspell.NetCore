@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Hunspell.Infrastructure;
+using Hunspell.NetCore.Infrastructure;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     /// <summary>
     /// Contains a set of <see cref="AffixEntry"/> instances based on the same <see cref="AFlag"/>.

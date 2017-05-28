@@ -1,4 +1,4 @@
-﻿namespace Hunspell
+﻿namespace Hunspell.NetCore
 {
     /// <summary>
     /// Indicates the method of encoding used for flag values.

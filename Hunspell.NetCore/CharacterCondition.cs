@@ -1,10 +1,9 @@
-﻿using Hunspell.Infrastructure;
-using System;
-using System.Text.RegularExpressions;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public struct CharacterCondition :
         IEquatable<CharacterCondition>

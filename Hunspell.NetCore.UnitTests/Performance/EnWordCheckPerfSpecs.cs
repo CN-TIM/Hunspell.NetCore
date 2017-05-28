@@ -1,6 +1,6 @@
 ﻿using NBench;
 
-namespace Hunspell.NetCore.Performance.Tests
+namespace Hunspell.NetCore.Tests.Performance
 {
     public class EnWordCheckPerfSpecs : EnWordPerfBase
     {

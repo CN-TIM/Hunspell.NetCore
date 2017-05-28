@@ -1,9 +1,9 @@
-﻿using NBench;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using NBench;
 
-namespace Hunspell.NetCore.Performance.Tests
+namespace Hunspell.NetCore.Tests.Performance
 {
     public class DictionaryFileLoadPerfSpec
     {

@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.17.0" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.2.0-beta4-build3444" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hunspell.NetCore\Hunspell.NetCore.csproj" />
+  </ItemGroup>
+
+</Project>

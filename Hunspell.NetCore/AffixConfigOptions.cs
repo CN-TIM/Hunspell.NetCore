@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     /// <summary>
     /// Various options that can be enabled as part of an <seealso cref="AffixConfig"/>.

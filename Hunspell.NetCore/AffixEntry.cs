@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Hunspell
+﻿namespace Hunspell.NetCore
 {
     /// <summary>
     /// An affix is either a prefix or a suffix attached to root words to make other words.

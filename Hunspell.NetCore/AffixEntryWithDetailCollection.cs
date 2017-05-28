@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hunspell.Infrastructure;
+using Hunspell.NetCore.Infrastructure;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public sealed class AffixEntryWithDetailCollection<TEntry> : ListWrapper<AffixEntryWithDetail<TEntry>>
         where TEntry : AffixEntry

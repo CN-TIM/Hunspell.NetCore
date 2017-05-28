@@ -1,10 +1,9 @@
-﻿using Hunspell.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using Hunspell.NetCore.Infrastructure;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public partial class HunspellDictionary
     {

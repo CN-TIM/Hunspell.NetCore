@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
-#if !NO_ASYNC
 using System.Threading.Tasks;
+#if !NO_ASYNC
+
 #endif
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public sealed class StaticEncodingLineReader : IHunspellLineReader, IDisposable
     {

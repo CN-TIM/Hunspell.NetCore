@@ -1,6 +1,4 @@
-﻿using Hunspell.Infrastructure;
-
-namespace Hunspell
+﻿namespace Hunspell.NetCore
 {
     public sealed class SuffixEntry : AffixEntry
     {

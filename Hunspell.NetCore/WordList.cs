@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hunspell.Infrastructure;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public sealed partial class WordList
     {

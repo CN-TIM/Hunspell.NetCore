@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Hunspell.Infrastructure;
+using Hunspell.NetCore.Infrastructure;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public sealed class CharacterConditionGroup : ArrayWrapper<CharacterCondition>
     {

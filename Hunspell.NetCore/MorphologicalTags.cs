@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public static class MorphologicalTags
     {

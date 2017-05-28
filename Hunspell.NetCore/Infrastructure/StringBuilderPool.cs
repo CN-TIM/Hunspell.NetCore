@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Hunspell.Infrastructure
+namespace Hunspell.NetCore.Infrastructure
 {
     internal static class StringBuilderPool
     {

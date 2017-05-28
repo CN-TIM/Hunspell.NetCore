@@ -1,16 +1,15 @@
-﻿using Hunspell.Infrastructure;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Runtime.CompilerServices;
-
-#if !NO_ASYNC
 using System.Threading.Tasks;
+using Hunspell.NetCore.Infrastructure;
+#if !NO_ASYNC
+
 #endif
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public sealed class WordListReader
     {

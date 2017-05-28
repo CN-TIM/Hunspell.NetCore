@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     [Flags]
     public enum WordEntryOptions : byte

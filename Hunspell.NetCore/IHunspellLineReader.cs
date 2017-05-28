@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-
-#if !NO_ASYNC
 using System.Threading.Tasks;
+#if !NO_ASYNC
+
 #endif
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     /// <summary>
     /// Defines operations to read affix or dictionary lines from a stream sequentially.

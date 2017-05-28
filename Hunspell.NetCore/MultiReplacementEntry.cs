@@ -1,8 +1,8 @@
-﻿using Hunspell.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Hunspell.NetCore.Infrastructure;
 
-namespace Hunspell
+namespace Hunspell.NetCore
 {
     public sealed class MultiReplacementEntry : ReplacementEntry
     {

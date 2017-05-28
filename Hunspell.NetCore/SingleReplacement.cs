@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Hunspell
+﻿namespace Hunspell.NetCore
 {
     public sealed class SingleReplacement : ReplacementEntry
     {
